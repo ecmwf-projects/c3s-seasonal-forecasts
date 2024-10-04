@@ -11,6 +11,17 @@ C3S has established an EQC framework for all its products and services to ensure
 
 ## Running the Notebooks
 
-Some of the analysis in the applications and workflows is not compute or data intensive, and so the Notebooks (.ipynb files) can be downloaded, adapted, and run on freely available cloud platforms, or on your own computing resources.
+This Jupyter Book provides practical examples of data processing of C3S seasonal data available from the CDS. The workflows and examples are in the form of [Jupyter notebooks](https://jupyter.org/). You may use a selection of cloud-based services to run, edit, export or create new notebooks, although some may exceed the free compute resources allocate by those platforms. These include the following:
 
-Earthkit...
+|Binder|Kaggle|Colab|
+|:-:|:-:|:-:|
+|[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/)|[![Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://www.kaggle.com/code)|[![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/)|
+|Binder may take some time to load, so please be patient!                                           |Requires (free) registration with Kaggle. Once in, "switch on the internet" via settings           |Requires Google account, and installation of some libraries, such as Cartopy `!pip install cartopy`|
+
+[WEkEo](https://www.wekeo.eu/computing), funded by Copernicus, also offers free compute services which could also be used for this purpose.
+
+If you would like to run these notebooks in your own environment, we suggest you install [Anaconda](https://docs.anaconda.com/anaconda/install/), which contains most of the libraries you will need. You will also need to install [Xarray](http://xarray.pydata.org/en/stable/) for working with multidimensional data in netcdf files, and the CDS API (`pip install cdsapi`) for downloading data programatically from the CDS.
+
+```{note}
+ [Earthkit](https://github.com/ecmwf/earthkit), currently under development at ECMWF, aims to simplify accessing, processing and plotting climate and weather data in a format agnostic manner, but is not extensively used here to be as explicit and transparent in the code as possible. However, some hints may be given on how Earthkit can be used. 
+```

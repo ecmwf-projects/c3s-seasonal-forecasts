@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
@@ -412,8 +412,31 @@ document.write(`
 </ol>
 <section id="running-the-notebooks">
 <h2>Running the Notebooks<a class="headerlink" href="#running-the-notebooks" title="Link to this heading">#</a></h2>
-<p>Some of the analysis in the applications and workflows is not compute or data intensive, and so the Notebooks (.ipynb files) can be downloaded, adapted, and run on freely available cloud platforms, or on your own computing resources.</p>
-<p>Earthkit…</p>
+<p>This Jupyter Book provides practical examples of data processing of C3S seasonal data available from the CDS. The workflows and examples are in the form of <a class="reference external" href="https://jupyter.org/">Jupyter notebooks</a>. You may use a selection of cloud-based services to run, edit, export or create new notebooks, although some may exceed the free compute resources allocate by those platforms. These include the following:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Binder</p></th>
+<th class="head text-center"><p>Kaggle</p></th>
+<th class="head text-center"><p>Colab</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><a class="reference external" href="https://mybinder.org/"><img alt="Binder" src="https://mybinder.org/badge.svg" /></a></p></td>
+<td class="text-center"><p><a class="reference external" href="https://www.kaggle.com/code"><img alt="Kaggle" src="https://kaggle.com/static/images/open-in-kaggle.svg" /></a></p></td>
+<td class="text-center"><p><a class="reference external" href="https://colab.research.google.com/"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>Binder may take some time to load, so please be patient!</p></td>
+<td class="text-center"><p>Requires (free) registration with Kaggle. Once in, “switch on the internet” via settings</p></td>
+<td class="text-center"><p>Requires Google account, and installation of some libraries, such as Cartopy <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span> <span class="pre">cartopy</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="https://www.wekeo.eu/computing">WEkEo</a>, funded by Copernicus, also offers free compute services which could also be used for this purpose.</p>
+<p>If you would like to run these notebooks in your own environment, we suggest you install <a class="reference external" href="https://docs.anaconda.com/anaconda/install/">Anaconda</a>, which contains most of the libraries you will need. You will also need to install <a class="reference external" href="http://xarray.pydata.org/en/stable/">Xarray</a> for working with multidimensional data in netcdf files, and the CDS API (<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">cdsapi</span></code>) for downloading data programatically from the CDS.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference external" href="https://github.com/ecmwf/earthkit">Earthkit</a>, currently under development at ECMWF, aims to simplify accessing, processing and plotting climate and weather data in a format agnostic manner, but is not extensively used here to be as explicit and transparent in the code as possible. However, some hints may be given on how Earthkit can be used.</p>
+</div>
 </section>
 <div class="toctree-wrapper compound">
 </div>

@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
@@ -442,7 +442,7 @@ document.write(`
 </section>
 <section id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h2>
-<p>Here we set which variable(s) will be downloaded, for which C3S seasonal system. We also set which forecast date we will create a forecast for, and which hindcast period to use (which will be used to calculate the terciles and anomalies). <em>Note that the URL and KEY need to be filled in with the details from your CDS account, and the cdsapi needs to be installed (NOTE that the CDS infrastructure including the API has recently been updated).</em></p>
+<p>Here we set which variable(s) will be downloaded, for which C3S seasonal system. We also set which forecast date we will create a forecast for, and which hindcast period to use (which will be used to calculate the terciles and anomalies). <strong>Note that the URL and KEY need to be filled in with the details from your CDS account, and the <a class="reference external" href="https://cds.climate.copernicus.eu/how-to-api">cdsapi package</a> needs to be installed.</strong></p>
 <div class="alert alert-block alert-warning">
 <b>Note:</b> To create multi-system combinations in the related Notebook this code needs to be run for each of the system to be included. Simply edit the `prov = 'ecmf.s51' ` line to retrieve and process other systems, or add a loop which runs over multiple systems.
 </div><p>Import required modules and configure CDS API key and client.</p>
@@ -468,19 +468,9 @@ document.write(`
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;HDF5_USE_FILE_LOCKING&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;FALSE&#39;</span>
 
 <span class="c1"># Need to leave this blank and the user needs to enter their url and key here</span>
-<span class="n">URL</span> <span class="o">=</span> <span class="s1">&#39;https://cds-beta.climate.copernicus.eu/api&#39;</span>
+<span class="n">URL</span> <span class="o">=</span> <span class="s1">&#39;https://cds.climate.copernicus.eu/api&#39;</span>
 <span class="n">KEY</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># INSERT CDS KEY HERE</span>
 <span class="n">c</span> <span class="o">=</span> <span class="n">cdsapi</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">URL</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">KEY</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-10-14 13:21:39,087 INFO [2024-09-28T00:00:00] **Welcome to the New Climate Data Store (CDS)!** This new system is in its early days of full operations and still undergoing enhancements and fine tuning. Some disruptions are to be expected. Your 
-[feedback](https://jira.ecmwf.int/plugins/servlet/desk/portal/1/create/202) is key to improve the user experience on the new CDS for the benefit of everyone. Thank you.
-2024-10-14 13:21:39,087 WARNING [2024-09-26T00:00:00] Should you have not yet migrated from the old CDS system to the new CDS, please check our [informative page](https://confluence.ecmwf.int/x/uINmFw) for guidance.
-2024-10-14 13:21:39,088 INFO [2024-09-26T00:00:00] Watch our [Forum](https://forum.ecmwf.int/) for Announcements, news and other discussed topics.
-2024-10-14 13:21:39,089 INFO [2024-09-16T00:00:00] Remember that you need to have an ECMWF account to use the new CDS. **Your old CDS credentials will not work in new CDS!**
-2024-10-14 13:21:39,089 WARNING [2024-06-16T00:00:00] CDS API syntax is changed and some keys or parameter names may have also changed. To avoid requests failing, please use the &quot;Show API request code&quot; tool on the dataset Download Form to check you are using the correct syntax for your API request.
 </pre></div>
 </div>
 </div>
@@ -543,7 +533,7 @@ document.write(`
 <span class="n">hc_years</span> <span class="o">=</span> <span class="s1">&#39;1993_2016&#39;</span>  <span class="c1"># string to print the hindcast period, and label the file</span>
 
 <span class="c1"># data path in cwd </span>
-<span class="n">cwd</span> <span class="o">=</span> <span class="s1">&#39;~/code/jnbs/seasonal/products_production_jnb&#39;</span> <span class="c1"># os.getcwd()</span>
+<span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="n">data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="n">cwd</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">])</span>
 <span class="k">try</span><span class="p">:</span>
    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>

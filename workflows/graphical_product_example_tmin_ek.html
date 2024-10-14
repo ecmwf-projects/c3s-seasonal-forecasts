@@ -1,0 +1,2194 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Reproducing the single-system graphical products for additional variables &#8212; eqcbook</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'workflows/graphical_product_example_tmin_ek';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+
+  <div class="bd-header-announcement container-fluid bd-header-announcement">
+    <div class="bd-header-announcement__content">⚠️This is under development!⚠️</div>
+  </div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/C3S–POS–LINE.png" class="logo__image only-light" alt="eqcbook - Home"/>
+    <script>document.write(`<img src="../_static/C3S–POS–LINE.png" class="logo__image only-dark" alt="eqcbook - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    C3S seasonal forecast applications and workflows
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">➡️ Product Workflows</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="prod_workflows.html">Workflows related to graphical products</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="enso_index_from_cds_data.html">Deriving the ENSO indices used in graphical products from CDS data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graphical_product_example_tmin.html">Reproducing the single-system graphical products for additional variables</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">➡️ Additional Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="extra_analysis.html">Extra analysis using C3S seasonal data</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ecmwf-projects/c3s_eqc_book_main" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ecmwf-projects/c3s_eqc_book_main/issues/new?title=Issue%20on%20page%20%2Fworkflows/graphical_product_example_tmin_ek.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/workflows/graphical_product_example_tmin_ek.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Reproducing the single-system graphical products for additional variables</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cds-api-requests">CDS API requests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-forecast-and-hindcast-data">Load forecast and hindcast data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#select-qualifying-ensemble-members">Select qualifying ensemble members</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#produce-tercile-summary">Produce tercile summary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-tercile-summary-from-hindcasts">Calculate tercile summary from hindcasts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-forecast-probabilities">Compute forecast probabilities</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-tercile-summary">Plot tercile summary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-setup">Plot setup</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-plot-for-each-lead-month">Make a plot for each lead month</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#produce-ensemble-mean-anomaly">Produce ensemble mean anomaly</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-ensemble-mean-anomaly">Plot ensemble mean anomaly</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Plot setup</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Make a plot for each lead month</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-significance-contours-and-masking">Add significance contours and masking</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p><img alt="logo" src="../_images/LogoLine_horizon_C3S.png" /></p>
+<section class="tex2jax_ignore mathjax_ignore" id="reproducing-the-single-system-graphical-products-for-additional-variables">
+<h1>Reproducing the single-system graphical products for additional variables<a class="headerlink" href="#reproducing-the-single-system-graphical-products-for-additional-variables" title="Link to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>This Jupyter Notebook shows how the products shown in the C3S seasonal  <strong><a class="reference external" href="https://climate.copernicus.eu/charts/packages/c3s_seasonal/">graphical products</a></strong> can be calculated from data in the <strong><a class="reference internal" href="#configuration"><span class="xref myst">Climate Data Store</span></a></strong> (CDS), and plotted. The C3S seasonal graphical and data products are described in this <strong><a class="reference external" href="https://confluence.ecmwf.int/display/CKB/C3S+seasonal+forecast+product+descriptions">documentation page</a></strong>.</p>
+<p>This example code can be used as the basis for creating graphical products which are not part of the C3S suite. In this example we look at monthly mean daily minimum temperature forecasts (for one system, ECMWF System 51), which is a variable available in the CDS dataset but not the graphical products. A ‘tercile summary’ is computed from tercile probabilities. An ensemble mean anomaly is also calculated and plotted with significance testing applied. This will be used in a further example to create multi-system combinations.</p>
+<div class="alert alert-block alert-warning">
+<b>Note:</b> This Notebook produces equivalent outcomes to [](graphical_product_example_tmin.ipynb), but makes as much use of (Earthkit)[https://earthkit.readthedocs.io/en/latest/] as possible (instead of cf_grib to decode the data, xarray, and matplotlib). 
+</div>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#configuration"><span class="xref myst">Configuration</span></a></p></li>
+<li><p><a class="reference internal" href="#cds-api-requests"><span class="xref myst">CDS API requests</span></a></p></li>
+<li><p><a class="reference internal" href="#load-forecast-and-hindcast-data"><span class="xref myst">Load forecast and hindcast data</span></a></p></li>
+<li><p><a class="reference internal" href="#produce-tercile-summary"><span class="xref myst">Produce tercile summary</span></a></p></li>
+<li><p><a class="reference internal" href="#plot-tercile-summary"><span class="xref myst">Plot tercile summary</span></a></p></li>
+<li><p><a class="reference internal" href="#produce-ensemble-mean-anomaly"><span class="xref myst">Produce ensemble mean anomaly</span></a></p></li>
+<li><p><a class="reference internal" href="#plot-ensemble-mean-anomaly"><span class="xref myst">Plot ensemble mean anomaly</span></a></p></li>
+</ol>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h2>
+<p>Here we set which variable(s) will be downloaded, for which C3S seasonal system. We also set which forecast date we will create a forecast for, and which hindcast period to use (which will be used to calculate the terciles and anomalies). <em>Note that the URL and KEY need to be filled in with the details from your CDS account, and the cdsapi needs to be installed (NOTE that the CDS infrastructure including the API has recently been updated).</em></p>
+<div class="alert alert-block alert-warning">
+<b>Note:</b> To create multi-system combinations in the related Notebook this needs to be run for each of the system to be included. Simply edit the `prov = 'ecmf.s51' ` line, or add a loop which runs through multiple systems.
+</div><p>Import required modules and configure CDS API key and client.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># !pip install &#39;cdsapi&gt;=0.7.2&#39;</span>
+<span class="c1"># !pip install earthkit</span>
+<span class="c1"># !pip list --local</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import required modules</span>
+<span class="kn">import</span> <span class="nn">cdsapi</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="c1"># import earthkit</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Date and time related libraries</span>
+<span class="kn">from</span> <span class="nn">dateutil.relativedelta</span> <span class="kn">import</span> <span class="n">relativedelta</span>
+<span class="kn">from</span> <span class="nn">calendar</span> <span class="kn">import</span> <span class="n">monthrange</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+<span class="kn">import</span> <span class="nn">cartopy.feature</span> <span class="k">as</span> <span class="nn">cfeature</span>
+
+<span class="c1"># config to avoid issues saving to netcdf if needed</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;HDF5_USE_FILE_LOCKING&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;FALSE&#39;</span>
+
+<span class="c1"># Need to leave this blank and the user needs to enter their url and key here</span>
+<span class="n">URL</span> <span class="o">=</span> <span class="s1">&#39;https://cds.climate.copernicus.eu/api&#39;</span>
+<span class="n">KEY</span> <span class="o">=</span> <span class="s1">&#39;ebe2f300-f038-4dbb-94a1-9f21892d46da&#39;</span> <span class="c1"># INSERT CDS KEY HERE</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">cdsapi</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">URL</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">KEY</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-10-14 11:20:32,390 INFO [2024-09-28T00:00:00] **Welcome to the New Climate Data Store (CDS)!** This new system is in its early days of full operations and still undergoing enhancements and fine tuning. Some disruptions are to be expected. Your 
+[feedback](https://jira.ecmwf.int/plugins/servlet/desk/portal/1/create/202) is key to improve the user experience on the new CDS for the benefit of everyone. Thank you.
+2024-10-14 11:20:32,390 WARNING [2024-09-26T00:00:00] Should you have not yet migrated from the old CDS system to the new CDS, please check our [informative page](https://confluence.ecmwf.int/x/uINmFw) for guidance.
+2024-10-14 11:20:32,391 INFO [2024-09-26T00:00:00] Watch our [Forum](https://forum.ecmwf.int/) for Announcements, news and other discussed topics.
+2024-10-14 11:20:32,392 INFO [2024-09-16T00:00:00] Remember that you need to have an ECMWF account to use the new CDS. **Your old CDS credentials will not work in new CDS!**
+2024-10-14 11:20:32,393 WARNING [2024-06-16T00:00:00] CDS API syntax is changed and some keys or parameter names may have also changed. To avoid requests failing, please use the &quot;Show API request code&quot; tool on the dataset Download Form to check you are using the correct syntax for your API request.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Define a library of provider details and variables of interest (only <code class="docutils literal notranslate"><span class="pre">tmin</span></code> is used here, but this will be compared to <code class="docutils literal notranslate"><span class="pre">tmean</span></code> and <code class="docutils literal notranslate"><span class="pre">tmax</span></code> in another Notebook).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># library of C3S systems and useful parameters</span>
+<span class="c1"># max_hc and max_fc represent the number of members to be considered (the number index starts from 0, the most recent)</span>
+<span class="n">providers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;ecmf.s51&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;ecmwf&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;ECMWF&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;SEAS5&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_system&#39;</span><span class="p">:</span> <span class="s1">&#39;51&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+    <span class="s1">&#39;lfpw.s8&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;meteo_france&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Météo-France&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;System 8&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_system&#39;</span><span class="p">:</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+    <span class="s1">&#39;egrr.s602&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;ukmo&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Met Office&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;GloSea6&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_system&#39;</span><span class="p">:</span> <span class="s1">&#39;602&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;max_hc&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;max_fc&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">},</span>
+    <span class="s1">&#39;edzw.s21&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;dwd&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;DWD&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;GCFS2.1&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_system&#39;</span><span class="p">:</span> <span class="s1">&#39;21&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+    <span class="s1">&#39;cmcc.s35&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;cmcc&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;CMCC&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;SPS3.5&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_system&#39;</span><span class="p">:</span> <span class="s1">&#39;35&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+    <span class="s1">&#39;kwbc.s2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;ncep&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;NCEP&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;CFSv2&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_system&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;max_hc&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;max_fc&#39;</span><span class="p">:</span> <span class="mi">52</span><span class="p">},</span>
+    <span class="s1">&#39;rjtd.s3&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;jma&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;JMA&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;CPS3&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_system&#39;</span><span class="p">:</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;max_hc&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="s1">&#39;max_fc&#39;</span><span class="p">:</span> <span class="mi">55</span><span class="p">},</span>
+    <span class="s1">&#39;cwao.s2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;eccc&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;ECCC&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;CanCM4i&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_system&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+    <span class="s1">&#39;cwao.s3&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;eccc&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;ECCC&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;GEM5-NEMO&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_system&#39;</span><span class="p">:</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+<span class="p">}</span>
+
+<span class="c1"># some options for variables</span>
+<span class="nb">vars</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;tmean&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;daily mean T2m&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;2m_temperature&#39;</span><span class="p">},</span> 
+    <span class="s1">&#39;tmax&#39;</span> <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;daily max T2m&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;maximum_2m_temperature_in_the_last_24_hours&#39;</span><span class="p">},</span>
+    <span class="s1">&#39;tmin&#39;</span> <span class="p">:</span> <span class="p">{</span><span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;daily min T2m&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;minimum_2m_temperature_in_the_last_24_hours&#39;</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Set request details.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># select the provider from the dictionary above, </span>
+<span class="c1"># and the associated feilds needed for the CDS API request and loading the data</span>
+<span class="n">prov</span> <span class="o">=</span> <span class="s1">&#39;ecmf.s51&#39;</span>  
+<span class="n">centre</span> <span class="o">=</span> <span class="n">providers</span><span class="p">[</span><span class="n">prov</span><span class="p">][</span><span class="s1">&#39;cds_name&#39;</span><span class="p">]</span>
+<span class="n">version</span> <span class="o">=</span> <span class="n">providers</span><span class="p">[</span><span class="n">prov</span><span class="p">][</span><span class="s1">&#39;cds_system&#39;</span><span class="p">]</span>
+<span class="n">lagged</span> <span class="o">=</span> <span class="n">providers</span><span class="p">[</span><span class="n">prov</span><span class="p">][</span><span class="s1">&#39;lagged&#39;</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="n">lagged</span><span class="p">:</span>
+    <span class="n">st_dim_name</span> <span class="o">=</span> <span class="s1">&#39;indexing_time&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">st_dim_name</span> <span class="o">=</span> <span class="s1">&#39;time&#39;</span>  <span class="c1"># if not config.get(&#39;isLagged&#39;,False) else &#39;indexing_time&#39;</span>
+
+<span class="c1"># define some other parameters for the data request</span>
+<span class="n">fc_yr</span> <span class="o">=</span> <span class="s1">&#39;2024&#39;</span>
+<span class="n">st_mon</span> <span class="o">=</span> <span class="s1">&#39;02&#39;</span>
+<span class="n">var</span> <span class="o">=</span> <span class="s1">&#39;tmin&#39;</span>
+<span class="n">var_str</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">[</span><span class="n">var</span><span class="p">][</span><span class="s1">&#39;plot_name&#39;</span><span class="p">]</span>   <span class="c1">#for plotting</span>
+<span class="n">cds_var_name</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">[</span><span class="n">var</span><span class="p">][</span><span class="s1">&#39;cds_name&#39;</span><span class="p">]</span>
+
+<span class="n">lt_mons</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>  <span class="c1"># cover all lead months when plotting month by month</span>
+<span class="n">hc_years</span> <span class="o">=</span> <span class="s1">&#39;1993_2016&#39;</span>  <span class="c1"># string to print the hindcast period, and lable the file</span>
+
+<span class="c1"># data path in cwd </span>
+<span class="n">cwd</span> <span class="o">=</span> <span class="s1">&#39;~/code/jnbs/seasonal/products_production_jnb&#39;</span> <span class="c1"># os.getcwd()</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="n">cwd</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">])</span>
+<span class="k">try</span><span class="p">:</span>
+   <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">FileExistsError</span><span class="p">:</span>
+   <span class="c1"># directory already exists</span>
+   <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="cds-api-requests">
+<h2>CDS API requests<a class="headerlink" href="#cds-api-requests" title="Link to this heading">#</a></h2>
+<p>Here we request the desired hindcast and forecast data in GRIB format using the CDS API, and save it within a folder ‘data’ in the current working directory, organised by originating centre and forecast system. For this example, the CDS API keywords used are:</p>
+<p><strong>Format</strong>: <code class="docutils literal notranslate"><span class="pre">Grib</span></code> <br>
+<strong>Variable</strong>: <code class="docutils literal notranslate"><span class="pre">minimum_2m_temperature_in_the_last_24_hours</span></code> <em>set via ‘cds_var_name’</em> <br>
+<strong>Originating centre</strong>: <code class="docutils literal notranslate"><span class="pre">ECMWF</span></code> <em>set via ‘centre’</em> <br>
+<strong>System</strong>: <code class="docutils literal notranslate"><span class="pre">51</span></code> <em>this refers to SEAS5 system 51, set via ‘version’</em> <br>
+<strong>Product type</strong>: <code class="docutils literal notranslate"><span class="pre">Monthly</span> <span class="pre">mean</span></code> <em>all ensemble members will be retrieved</em> <br>
+<strong>Year</strong>: <code class="docutils literal notranslate"><span class="pre">1993</span> <span class="pre">to</span> <span class="pre">2016</span></code> <em>for the hindcast</em> <code class="docutils literal notranslate"><span class="pre">2024</span></code> <em>for the forecast, set via ‘hc_years’ and ‘fc_year’</em> <br>
+<strong>Month</strong>: <code class="docutils literal notranslate"><span class="pre">02</span></code> <em>February, set via ‘st_mon’</em> <br>
+<strong>Leadtime month</strong>: <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">to</span> <span class="pre">6</span></code> <em>all lead months available, February to July in this case</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">earthkit.data</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="s1">&#39;seasonal-monthly-single-levels&#39;</span>
+<span class="n">req</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;grib&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="n">cds_var_name</span><span class="p">,</span>
+    <span class="s1">&#39;originating_centre&#39;</span><span class="p">:</span> <span class="n">centre</span><span class="p">,</span>
+    <span class="s1">&#39;system&#39;</span><span class="p">:</span> <span class="n">version</span><span class="p">,</span>
+    <span class="s1">&#39;product_type&#39;</span><span class="p">:</span> <span class="s1">&#39;monthly_mean&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;1993&#39;</span><span class="p">,</span> <span class="s1">&#39;1994&#39;</span><span class="p">,</span> <span class="s1">&#39;1995&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;1996&#39;</span><span class="p">,</span> <span class="s1">&#39;1997&#39;</span><span class="p">,</span> <span class="s1">&#39;1998&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;1999&#39;</span><span class="p">,</span> <span class="s1">&#39;2000&#39;</span><span class="p">,</span> <span class="s1">&#39;2001&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;2002&#39;</span><span class="p">,</span> <span class="s1">&#39;2003&#39;</span><span class="p">,</span> <span class="s1">&#39;2004&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;2005&#39;</span><span class="p">,</span> <span class="s1">&#39;2006&#39;</span><span class="p">,</span> <span class="s1">&#39;2007&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;2008&#39;</span><span class="p">,</span> <span class="s1">&#39;2009&#39;</span><span class="p">,</span> <span class="s1">&#39;2010&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;2011&#39;</span><span class="p">,</span> <span class="s1">&#39;2012&#39;</span><span class="p">,</span> <span class="s1">&#39;2013&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;2014&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="s1">&#39;2016&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;month&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">st_mon</span><span class="p">],</span>
+    <span class="s1">&#39;leadtime_month&#39;</span><span class="p">:</span> <span class="n">lt_mons</span>
+<span class="p">}</span>
+
+<span class="n">ds</span> <span class="o">=</span> <span class="n">earthkit</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">from_source</span><span class="p">(</span><span class="s1">&#39;cds&#39;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">req</span><span class="p">,</span>  <span class="n">prompt</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-10-14 11:21:00,830 INFO [2024-09-28T00:00:00] **Welcome to the New Climate Data Store (CDS)!** This new system is in its early days of full operations and still undergoing enhancements and fine tuning. Some disruptions are to be expected. Your 
+[feedback](https://jira.ecmwf.int/plugins/servlet/desk/portal/1/create/202) is key to improve the user experience on the new CDS for the benefit of everyone. Thank you.
+2024-10-14 11:21:00,831 WARNING [2024-09-26T00:00:00] Should you have not yet migrated from the old CDS system to the new CDS, please check our [informative page](https://confluence.ecmwf.int/x/uINmFw) for guidance.
+2024-10-14 11:21:00,832 INFO [2024-09-26T00:00:00] Watch our [Forum](https://forum.ecmwf.int/) for Announcements, news and other discussed topics.
+2024-10-14 11:21:00,833 INFO [2024-09-16T00:00:00] Remember that you need to have an ECMWF account to use the new CDS. **Your old CDS credentials will not work in new CDS!**
+2024-10-14 11:21:00,833 WARNING [2024-06-16T00:00:00] CDS API syntax is changed and some keys or parameter names may have also changed. To avoid requests failing, please use the &quot;Show API request code&quot; tool on the dataset Download Form to check you are using the correct syntax for your API request.
+2024-10-14 11:21:00,865 INFO [2024-09-28T00:00:00] **Welcome to the New Climate Data Store (CDS)!** This new system is in its early days of full operations and still undergoing enhancements and fine tuning. Some disruptions are to be expected. Your 
+[feedback](https://jira.ecmwf.int/plugins/servlet/desk/portal/1/create/202) is key to improve the user experience on the new CDS for the benefit of everyone. Thank you.
+2024-10-14 11:21:00,866 WARNING [2024-09-26T00:00:00] Should you have not yet migrated from the old CDS system to the new CDS, please check our [informative page](https://confluence.ecmwf.int/x/uINmFw) for guidance.
+2024-10-14 11:21:00,866 INFO [2024-09-26T00:00:00] Watch our [Forum](https://forum.ecmwf.int/) for Announcements, news and other discussed topics.
+2024-10-14 11:21:00,867 INFO [2024-09-16T00:00:00] Remember that you need to have an ECMWF account to use the new CDS. **Your old CDS credentials will not work in new CDS!**
+2024-10-14 11:21:00,867 WARNING [2024-06-16T00:00:00] CDS API syntax is changed and some keys or parameter names may have also changed. To avoid requests failing, please use the &quot;Show API request code&quot; tool on the dataset Download Form to check you are using the correct syntax for your API request.
+2024-10-14 11:21:01,477 INFO Request ID is ce52bff1-c53e-482f-840c-3dbe8dce2aea
+2024-10-14 11:21:01,522 INFO status has been updated to accepted
+2024-10-14 11:21:05,549 INFO status has been updated to successful
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">GRIBReader(/etc/ecmwf/ssd/ssd1/jupyterhub/cxcg-jupyterhub/tmpdirs/cxcg.39899829/tmpkthp_uck/cds-retriever-d87e25f9192bbae6da4743d482a7801b29b3ec6f7681f696ccacb43f6f97ca06.grib)</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>centre</th>
+      <th>shortName</th>
+      <th>typeOfLevel</th>
+      <th>level</th>
+      <th>dataDate</th>
+      <th>dataTime</th>
+      <th>stepRange</th>
+      <th>dataType</th>
+      <th>number</th>
+      <th>gridType</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>19930201</td>
+      <td>0</td>
+      <td>672</td>
+      <td>fcmean</td>
+      <td>0</td>
+      <td>regular_ll</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>19930201</td>
+      <td>0</td>
+      <td>672</td>
+      <td>fcmean</td>
+      <td>1</td>
+      <td>regular_ll</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>19930201</td>
+      <td>0</td>
+      <td>672</td>
+      <td>fcmean</td>
+      <td>2</td>
+      <td>regular_ll</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>19930201</td>
+      <td>0</td>
+      <td>672</td>
+      <td>fcmean</td>
+      <td>3</td>
+      <td>regular_ll</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>19930201</td>
+      <td>0</td>
+      <td>672</td>
+      <td>fcmean</td>
+      <td>4</td>
+      <td>regular_ll</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3595</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>20160201</td>
+      <td>0</td>
+      <td>4368</td>
+      <td>fcmean</td>
+      <td>20</td>
+      <td>regular_ll</td>
+    </tr>
+    <tr>
+      <th>3596</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>20160201</td>
+      <td>0</td>
+      <td>4368</td>
+      <td>fcmean</td>
+      <td>21</td>
+      <td>regular_ll</td>
+    </tr>
+    <tr>
+      <th>3597</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>20160201</td>
+      <td>0</td>
+      <td>4368</td>
+      <td>fcmean</td>
+      <td>22</td>
+      <td>regular_ll</td>
+    </tr>
+    <tr>
+      <th>3598</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>20160201</td>
+      <td>0</td>
+      <td>4368</td>
+      <td>fcmean</td>
+      <td>23</td>
+      <td>regular_ll</td>
+    </tr>
+    <tr>
+      <th>3599</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>20160201</td>
+      <td>0</td>
+      <td>4368</td>
+      <td>fcmean</td>
+      <td>24</td>
+      <td>regular_ll</td>
+    </tr>
+  </tbody>
+</table>
+<p>3600 rows × 10 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/</span><span class="si">{}</span><span class="s1">_mm_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_ek.grib&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">hc_years</span><span class="p">,</span> <span class="n">st_mon</span><span class="p">))</span>  <span class="c1"># NOT WORKING!</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/</span><span class="si">{}</span><span class="s1">_mm_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_ek.grib&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">hc_years</span><span class="p">,</span> <span class="n">st_mon</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;~/code/jnbs/seasonal/products_production_jnb/data/ecmwf/51/tmin_mm_ecmwf_51_1993_2016_02_ek.grib&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xr_ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">to_xarray</span><span class="p">(</span><span class="n">xarray_open_dataset_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;backend_kwargs&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">time_dims</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;forecastMonth&#39;</span><span class="p">,</span> <span class="n">st_dim_name</span><span class="p">))})</span>
+<span class="n">xr_ds</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+html[data-theme=dark],
+body[data-theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block !important;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 0 20px 0 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: inline-block;
+  opacity: 0;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:focus + label {
+  border: 2px solid var(--xr-font-color0);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-index-preview {
+  grid-column: 2 / 5;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data,
+.xr-index-data-in:checked ~ .xr-index-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-index-name div,
+.xr-index-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2,
+.xr-no-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.Dataset&gt; Size: 933MB
+Dimensions:        (number: 25, forecastMonth: 6, time: 24, surface: 1,
+                    latitude: 180, longitude: 360)
+Coordinates:
+  * number         (number) int64 200B 0 1 2 3 4 5 6 7 ... 18 19 20 21 22 23 24
+  * forecastMonth  (forecastMonth) int64 48B 1 2 3 4 5 6
+  * time           (time) datetime64[ns] 192B 1993-02-01 ... 2016-02-01
+  * surface        (surface) float64 8B 0.0
+  * latitude       (latitude) float64 1kB 89.5 88.5 87.5 ... -87.5 -88.5 -89.5
+  * longitude      (longitude) float64 3kB 0.5 1.5 2.5 3.5 ... 357.5 358.5 359.5
+Data variables:
+    mn2t24         (number, forecastMonth, time, surface, latitude, longitude) float32 933MB ...
+Attributes:
+    GRIB_edition:            1
+    GRIB_centre:             ecmf
+    GRIB_centreDescription:  European Centre for Medium-Range Weather Forecasts
+    GRIB_subCentre:          0
+    Conventions:             CF-1.7
+    institution:             European Centre for Medium-Range Weather Forecasts
+    history:                 2024-10-14T11:27 GRIB to CDM+CF via cfgrib-0.9.1...</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-2700d2f4-592e-43d5-be83-a9ed58f3caf0' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-2700d2f4-592e-43d5-be83-a9ed58f3caf0' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>number</span>: 25</li><li><span class='xr-has-index'>forecastMonth</span>: 6</li><li><span class='xr-has-index'>time</span>: 24</li><li><span class='xr-has-index'>surface</span>: 1</li><li><span class='xr-has-index'>latitude</span>: 180</li><li><span class='xr-has-index'>longitude</span>: 360</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-868faf79-afe8-4560-8532-6f0905be4fcf' class='xr-section-summary-in' type='checkbox'  checked><label for='section-868faf79-afe8-4560-8532-6f0905be4fcf' class='xr-section-summary' >Coordinates: <span>(6)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>number</span></div><div class='xr-var-dims'>(number)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 4 5 6 ... 19 20 21 22 23 24</div><input id='attrs-22b1924a-d91e-4932-97a1-cf6bc597214b' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-22b1924a-d91e-4932-97a1-cf6bc597214b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-7b972887-5d8b-4839-8902-c2424368c197' class='xr-var-data-in' type='checkbox'><label for='data-7b972887-5d8b-4839-8902-c2424368c197' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>ensemble member numerical id</dd><dt><span>units :</span></dt><dd>1</dd><dt><span>standard_name :</span></dt><dd>realization</dd></dl></div><div class='xr-var-data'><pre>array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+       18, 19, 20, 21, 22, 23, 24])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>forecastMonth</span></div><div class='xr-var-dims'>(forecastMonth)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>1 2 3 4 5 6</div><input id='attrs-a75edb3d-3f00-48e5-9c68-6fda75fba505' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-a75edb3d-3f00-48e5-9c68-6fda75fba505' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-7ebbec57-e35c-4f81-9d20-d7975d664d0d' class='xr-var-data-in' type='checkbox'><label for='data-7ebbec57-e35c-4f81-9d20-d7975d664d0d' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>months since forecast_reference_time</dd><dt><span>units :</span></dt><dd>1</dd></dl></div><div class='xr-var-data'><pre>array([1, 2, 3, 4, 5, 6])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>time</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>datetime64[ns]</div><div class='xr-var-preview xr-preview'>1993-02-01 ... 2016-02-01</div><input id='attrs-18734df4-659c-4e11-b17b-205a268e5503' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-18734df4-659c-4e11-b17b-205a268e5503' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-12de863a-ede8-4358-b1b9-254bf50957e9' class='xr-var-data-in' type='checkbox'><label for='data-12de863a-ede8-4358-b1b9-254bf50957e9' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>initial time of forecast</dd><dt><span>standard_name :</span></dt><dd>forecast_reference_time</dd></dl></div><div class='xr-var-data'><pre>array([&#x27;1993-02-01T00:00:00.000000000&#x27;, &#x27;1994-02-01T00:00:00.000000000&#x27;,
+       &#x27;1995-02-01T00:00:00.000000000&#x27;, &#x27;1996-02-01T00:00:00.000000000&#x27;,
+       &#x27;1997-02-01T00:00:00.000000000&#x27;, &#x27;1998-02-01T00:00:00.000000000&#x27;,
+       &#x27;1999-02-01T00:00:00.000000000&#x27;, &#x27;2000-02-01T00:00:00.000000000&#x27;,
+       &#x27;2001-02-01T00:00:00.000000000&#x27;, &#x27;2002-02-01T00:00:00.000000000&#x27;,
+       &#x27;2003-02-01T00:00:00.000000000&#x27;, &#x27;2004-02-01T00:00:00.000000000&#x27;,
+       &#x27;2005-02-01T00:00:00.000000000&#x27;, &#x27;2006-02-01T00:00:00.000000000&#x27;,
+       &#x27;2007-02-01T00:00:00.000000000&#x27;, &#x27;2008-02-01T00:00:00.000000000&#x27;,
+       &#x27;2009-02-01T00:00:00.000000000&#x27;, &#x27;2010-02-01T00:00:00.000000000&#x27;,
+       &#x27;2011-02-01T00:00:00.000000000&#x27;, &#x27;2012-02-01T00:00:00.000000000&#x27;,
+       &#x27;2013-02-01T00:00:00.000000000&#x27;, &#x27;2014-02-01T00:00:00.000000000&#x27;,
+       &#x27;2015-02-01T00:00:00.000000000&#x27;, &#x27;2016-02-01T00:00:00.000000000&#x27;],
+      dtype=&#x27;datetime64[ns]&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>surface</span></div><div class='xr-var-dims'>(surface)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.0</div><input id='attrs-5ac8b8ad-2d22-42ae-bc59-db966337213c' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-5ac8b8ad-2d22-42ae-bc59-db966337213c' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-65cd06cd-cec2-46df-80b4-c1e211cef197' class='xr-var-data-in' type='checkbox'><label for='data-65cd06cd-cec2-46df-80b4-c1e211cef197' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>original GRIB coordinate for key: level(surface)</dd><dt><span>units :</span></dt><dd>1</dd></dl></div><div class='xr-var-data'><pre>array([0.])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>latitude</span></div><div class='xr-var-dims'>(latitude)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>89.5 88.5 87.5 ... -88.5 -89.5</div><input id='attrs-63376982-3b18-42e9-b948-d73feddc5e72' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-63376982-3b18-42e9-b948-d73feddc5e72' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-8e80e61b-fc2d-42bd-a786-28a282ab5a2b' class='xr-var-data-in' type='checkbox'><label for='data-8e80e61b-fc2d-42bd-a786-28a282ab5a2b' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>units :</span></dt><dd>degrees_north</dd><dt><span>standard_name :</span></dt><dd>latitude</dd><dt><span>long_name :</span></dt><dd>latitude</dd><dt><span>stored_direction :</span></dt><dd>decreasing</dd></dl></div><div class='xr-var-data'><pre>array([ 89.5,  88.5,  87.5,  86.5,  85.5,  84.5,  83.5,  82.5,  81.5,  80.5,
+        79.5,  78.5,  77.5,  76.5,  75.5,  74.5,  73.5,  72.5,  71.5,  70.5,
+        69.5,  68.5,  67.5,  66.5,  65.5,  64.5,  63.5,  62.5,  61.5,  60.5,
+        59.5,  58.5,  57.5,  56.5,  55.5,  54.5,  53.5,  52.5,  51.5,  50.5,
+        49.5,  48.5,  47.5,  46.5,  45.5,  44.5,  43.5,  42.5,  41.5,  40.5,
+        39.5,  38.5,  37.5,  36.5,  35.5,  34.5,  33.5,  32.5,  31.5,  30.5,
+        29.5,  28.5,  27.5,  26.5,  25.5,  24.5,  23.5,  22.5,  21.5,  20.5,
+        19.5,  18.5,  17.5,  16.5,  15.5,  14.5,  13.5,  12.5,  11.5,  10.5,
+         9.5,   8.5,   7.5,   6.5,   5.5,   4.5,   3.5,   2.5,   1.5,   0.5,
+        -0.5,  -1.5,  -2.5,  -3.5,  -4.5,  -5.5,  -6.5,  -7.5,  -8.5,  -9.5,
+       -10.5, -11.5, -12.5, -13.5, -14.5, -15.5, -16.5, -17.5, -18.5, -19.5,
+       -20.5, -21.5, -22.5, -23.5, -24.5, -25.5, -26.5, -27.5, -28.5, -29.5,
+       -30.5, -31.5, -32.5, -33.5, -34.5, -35.5, -36.5, -37.5, -38.5, -39.5,
+       -40.5, -41.5, -42.5, -43.5, -44.5, -45.5, -46.5, -47.5, -48.5, -49.5,
+       -50.5, -51.5, -52.5, -53.5, -54.5, -55.5, -56.5, -57.5, -58.5, -59.5,
+       -60.5, -61.5, -62.5, -63.5, -64.5, -65.5, -66.5, -67.5, -68.5, -69.5,
+       -70.5, -71.5, -72.5, -73.5, -74.5, -75.5, -76.5, -77.5, -78.5, -79.5,
+       -80.5, -81.5, -82.5, -83.5, -84.5, -85.5, -86.5, -87.5, -88.5, -89.5])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>longitude</span></div><div class='xr-var-dims'>(longitude)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.5 1.5 2.5 ... 357.5 358.5 359.5</div><input id='attrs-76334891-14be-44a1-83a6-b89483545fd8' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-76334891-14be-44a1-83a6-b89483545fd8' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-6219d3be-5a22-4809-b5bc-fc7489b59f8b' class='xr-var-data-in' type='checkbox'><label for='data-6219d3be-5a22-4809-b5bc-fc7489b59f8b' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>units :</span></dt><dd>degrees_east</dd><dt><span>standard_name :</span></dt><dd>longitude</dd><dt><span>long_name :</span></dt><dd>longitude</dd></dl></div><div class='xr-var-data'><pre>array([  0.5,   1.5,   2.5, ..., 357.5, 358.5, 359.5])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-ddb67981-a985-48b0-99c5-bb65b38b61b7' class='xr-section-summary-in' type='checkbox'  checked><label for='section-ddb67981-a985-48b0-99c5-bb65b38b61b7' class='xr-section-summary' >Data variables: <span>(1)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>mn2t24</span></div><div class='xr-var-dims'>(number, forecastMonth, time, surface, latitude, longitude)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-40ab2fa9-f552-4223-8c02-14449d3a628b' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-40ab2fa9-f552-4223-8c02-14449d3a628b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-abd3ad3d-7404-4d86-9683-476b98a2d895' class='xr-var-data-in' type='checkbox'><label for='data-abd3ad3d-7404-4d86-9683-476b98a2d895' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>GRIB_paramId :</span></dt><dd>52</dd><dt><span>GRIB_dataType :</span></dt><dd>fcmean</dd><dt><span>GRIB_numberOfPoints :</span></dt><dd>64800</dd><dt><span>GRIB_typeOfLevel :</span></dt><dd>surface</dd><dt><span>GRIB_stepUnits :</span></dt><dd>1</dd><dt><span>GRIB_stepType :</span></dt><dd>instant</dd><dt><span>GRIB_gridType :</span></dt><dd>regular_ll</dd><dt><span>GRIB_uvRelativeToGrid :</span></dt><dd>0</dd><dt><span>GRIB_NV :</span></dt><dd>0</dd><dt><span>GRIB_Nx :</span></dt><dd>360</dd><dt><span>GRIB_Ny :</span></dt><dd>180</dd><dt><span>GRIB_cfName :</span></dt><dd>unknown</dd><dt><span>GRIB_cfVarName :</span></dt><dd>mn2t24</dd><dt><span>GRIB_gridDefinitionDescription :</span></dt><dd>Latitude/Longitude Grid</dd><dt><span>GRIB_iDirectionIncrementInDegrees :</span></dt><dd>1.0</dd><dt><span>GRIB_iScansNegatively :</span></dt><dd>0</dd><dt><span>GRIB_jDirectionIncrementInDegrees :</span></dt><dd>1.0</dd><dt><span>GRIB_jPointsAreConsecutive :</span></dt><dd>0</dd><dt><span>GRIB_jScansPositively :</span></dt><dd>0</dd><dt><span>GRIB_latitudeOfFirstGridPointInDegrees :</span></dt><dd>89.5</dd><dt><span>GRIB_latitudeOfLastGridPointInDegrees :</span></dt><dd>-89.5</dd><dt><span>GRIB_longitudeOfFirstGridPointInDegrees :</span></dt><dd>0.5</dd><dt><span>GRIB_longitudeOfLastGridPointInDegrees :</span></dt><dd>359.5</dd><dt><span>GRIB_missingValue :</span></dt><dd>9999</dd><dt><span>GRIB_name :</span></dt><dd>Minimum temperature at 2 metres in the last 24 hours</dd><dt><span>GRIB_shortName :</span></dt><dd>mn2t24</dd><dt><span>GRIB_totalNumber :</span></dt><dd>0</dd><dt><span>GRIB_units :</span></dt><dd>K</dd><dt><span>long_name :</span></dt><dd>Minimum temperature at 2 metres in the last 24 hours</dd><dt><span>units :</span></dt><dd>K</dd><dt><span>standard_name :</span></dt><dd>unknown</dd></dl></div><div class='xr-var-data'><pre>[233280000 values with dtype=float32]</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-8fb153c8-cb27-4bc3-97ed-c715b93910d2' class='xr-section-summary-in' type='checkbox'  ><label for='section-8fb153c8-cb27-4bc3-97ed-c715b93910d2' class='xr-section-summary' >Indexes: <span>(6)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-index-name'><div>number</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-f2c313bd-052c-439a-aa91-1037b66befff' class='xr-index-data-in' type='checkbox'/><label for='index-f2c313bd-052c-439a-aa91-1037b66befff' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+       18, 19, 20, 21, 22, 23, 24],
+      dtype=&#x27;int64&#x27;, name=&#x27;number&#x27;))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>forecastMonth</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-cbc461aa-aaae-4563-abfe-f52067a71962' class='xr-index-data-in' type='checkbox'/><label for='index-cbc461aa-aaae-4563-abfe-f52067a71962' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([1, 2, 3, 4, 5, 6], dtype=&#x27;int64&#x27;, name=&#x27;forecastMonth&#x27;))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>time</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-73a1b61f-0a98-4c82-83f5-1e430cbf6e82' class='xr-index-data-in' type='checkbox'/><label for='index-73a1b61f-0a98-4c82-83f5-1e430cbf6e82' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(DatetimeIndex([&#x27;1993-02-01&#x27;, &#x27;1994-02-01&#x27;, &#x27;1995-02-01&#x27;, &#x27;1996-02-01&#x27;,
+               &#x27;1997-02-01&#x27;, &#x27;1998-02-01&#x27;, &#x27;1999-02-01&#x27;, &#x27;2000-02-01&#x27;,
+               &#x27;2001-02-01&#x27;, &#x27;2002-02-01&#x27;, &#x27;2003-02-01&#x27;, &#x27;2004-02-01&#x27;,
+               &#x27;2005-02-01&#x27;, &#x27;2006-02-01&#x27;, &#x27;2007-02-01&#x27;, &#x27;2008-02-01&#x27;,
+               &#x27;2009-02-01&#x27;, &#x27;2010-02-01&#x27;, &#x27;2011-02-01&#x27;, &#x27;2012-02-01&#x27;,
+               &#x27;2013-02-01&#x27;, &#x27;2014-02-01&#x27;, &#x27;2015-02-01&#x27;, &#x27;2016-02-01&#x27;],
+              dtype=&#x27;datetime64[ns]&#x27;, name=&#x27;time&#x27;, freq=None))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>surface</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-31e7d415-98cf-4085-aa95-299d62017f78' class='xr-index-data-in' type='checkbox'/><label for='index-31e7d415-98cf-4085-aa95-299d62017f78' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([0.0], dtype=&#x27;float64&#x27;, name=&#x27;surface&#x27;))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>latitude</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-18a44fb7-009c-405a-be15-06054332ffb0' class='xr-index-data-in' type='checkbox'/><label for='index-18a44fb7-009c-405a-be15-06054332ffb0' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([ 89.5,  88.5,  87.5,  86.5,  85.5,  84.5,  83.5,  82.5,  81.5,  80.5,
+       ...
+       -80.5, -81.5, -82.5, -83.5, -84.5, -85.5, -86.5, -87.5, -88.5, -89.5],
+      dtype=&#x27;float64&#x27;, name=&#x27;latitude&#x27;, length=180))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>longitude</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-8b5fb1db-dd32-4b1f-a9bf-5e3e6911cb3a' class='xr-index-data-in' type='checkbox'/><label for='index-8b5fb1db-dd32-4b1f-a9bf-5e3e6911cb3a' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([  0.5,   1.5,   2.5,   3.5,   4.5,   5.5,   6.5,   7.5,   8.5,   9.5,
+       ...
+       350.5, 351.5, 352.5, 353.5, 354.5, 355.5, 356.5, 357.5, 358.5, 359.5],
+      dtype=&#x27;float64&#x27;, name=&#x27;longitude&#x27;, length=360))</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-d811239a-fd8d-4c30-8973-717bbedebdbd' class='xr-section-summary-in' type='checkbox'  checked><label for='section-d811239a-fd8d-4c30-8973-717bbedebdbd' class='xr-section-summary' >Attributes: <span>(7)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>GRIB_edition :</span></dt><dd>1</dd><dt><span>GRIB_centre :</span></dt><dd>ecmf</dd><dt><span>GRIB_centreDescription :</span></dt><dd>European Centre for Medium-Range Weather Forecasts</dd><dt><span>GRIB_subCentre :</span></dt><dd>0</dd><dt><span>Conventions :</span></dt><dd>CF-1.7</dd><dt><span>institution :</span></dt><dd>European Centre for Medium-Range Weather Forecasts</dd><dt><span>history :</span></dt><dd>2024-10-14T11:27 GRIB to CDM+CF via cfgrib-0.9.14.1/ecCodes-2.38.1 with {&quot;source&quot;: &quot;N/A&quot;, &quot;filter_by_keys&quot;: {}, &quot;encode_cf&quot;: [&quot;parameter&quot;, &quot;time&quot;, &quot;geography&quot;, &quot;vertical&quot;]}</dd></dl></div></li></ul></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xr_ds</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/</span><span class="si">{}</span><span class="s1">_mm_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_ek.nc&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">fc_yr</span><span class="p">,</span> <span class="n">st_mon</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="s1">&#39;seasonal-monthly-single-levels&#39;</span>
+<span class="n">req</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;grib&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="n">cds_var_name</span><span class="p">,</span>
+    <span class="s1">&#39;originating_centre&#39;</span><span class="p">:</span> <span class="n">centre</span><span class="p">,</span>
+    <span class="s1">&#39;system&#39;</span><span class="p">:</span> <span class="n">version</span><span class="p">,</span>
+    <span class="s1">&#39;product_type&#39;</span><span class="p">:</span> <span class="s1">&#39;monthly_mean&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">fc_yr</span><span class="p">],</span>
+    <span class="s1">&#39;month&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">st_mon</span><span class="p">],</span>
+    <span class="s1">&#39;leadtime_month&#39;</span><span class="p">:</span> <span class="n">lt_mons</span>
+<span class="p">}</span>
+
+<span class="n">ds</span> <span class="o">=</span> <span class="n">earthkit</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">from_source</span><span class="p">(</span><span class="s1">&#39;cds&#39;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">req</span><span class="p">,</span>  <span class="n">prompt</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-10-14 11:42:02,747 INFO [2024-09-28T00:00:00] **Welcome to the New Climate Data Store (CDS)!** This new system is in its early days of full operations and still undergoing enhancements and fine tuning. Some disruptions are to be expected. Your 
+[feedback](https://jira.ecmwf.int/plugins/servlet/desk/portal/1/create/202) is key to improve the user experience on the new CDS for the benefit of everyone. Thank you.
+2024-10-14 11:42:02,747 WARNING [2024-09-26T00:00:00] Should you have not yet migrated from the old CDS system to the new CDS, please check our [informative page](https://confluence.ecmwf.int/x/uINmFw) for guidance.
+2024-10-14 11:42:02,748 INFO [2024-09-26T00:00:00] Watch our [Forum](https://forum.ecmwf.int/) for Announcements, news and other discussed topics.
+2024-10-14 11:42:02,749 INFO [2024-09-16T00:00:00] Remember that you need to have an ECMWF account to use the new CDS. **Your old CDS credentials will not work in new CDS!**
+2024-10-14 11:42:02,750 WARNING [2024-06-16T00:00:00] CDS API syntax is changed and some keys or parameter names may have also changed. To avoid requests failing, please use the &quot;Show API request code&quot; tool on the dataset Download Form to check you are using the correct syntax for your API request.
+2024-10-14 11:42:02,781 INFO [2024-09-28T00:00:00] **Welcome to the New Climate Data Store (CDS)!** This new system is in its early days of full operations and still undergoing enhancements and fine tuning. Some disruptions are to be expected. Your 
+[feedback](https://jira.ecmwf.int/plugins/servlet/desk/portal/1/create/202) is key to improve the user experience on the new CDS for the benefit of everyone. Thank you.
+2024-10-14 11:42:02,781 WARNING [2024-09-26T00:00:00] Should you have not yet migrated from the old CDS system to the new CDS, please check our [informative page](https://confluence.ecmwf.int/x/uINmFw) for guidance.
+2024-10-14 11:42:02,782 INFO [2024-09-26T00:00:00] Watch our [Forum](https://forum.ecmwf.int/) for Announcements, news and other discussed topics.
+2024-10-14 11:42:02,783 INFO [2024-09-16T00:00:00] Remember that you need to have an ECMWF account to use the new CDS. **Your old CDS credentials will not work in new CDS!**
+2024-10-14 11:42:02,783 WARNING [2024-06-16T00:00:00] CDS API syntax is changed and some keys or parameter names may have also changed. To avoid requests failing, please use the &quot;Show API request code&quot; tool on the dataset Download Form to check you are using the correct syntax for your API request.
+2024-10-14 11:42:03,210 INFO Request ID is 5d0b5fc9-de2d-473b-8ff7-ab7da3c7540a
+2024-10-14 11:42:03,265 INFO status has been updated to accepted
+2024-10-14 11:42:04,833 INFO status has been updated to running
+2024-10-14 11:42:15,801 INFO status has been updated to successful
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>centre</th>
+      <th>shortName</th>
+      <th>typeOfLevel</th>
+      <th>level</th>
+      <th>dataDate</th>
+      <th>dataTime</th>
+      <th>stepRange</th>
+      <th>dataType</th>
+      <th>number</th>
+      <th>gridType</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>20240201</td>
+      <td>0</td>
+      <td>696</td>
+      <td>fcmean</td>
+      <td>0</td>
+      <td>regular_ll</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>20240201</td>
+      <td>0</td>
+      <td>696</td>
+      <td>fcmean</td>
+      <td>1</td>
+      <td>regular_ll</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>20240201</td>
+      <td>0</td>
+      <td>696</td>
+      <td>fcmean</td>
+      <td>2</td>
+      <td>regular_ll</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>20240201</td>
+      <td>0</td>
+      <td>696</td>
+      <td>fcmean</td>
+      <td>3</td>
+      <td>regular_ll</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>20240201</td>
+      <td>0</td>
+      <td>696</td>
+      <td>fcmean</td>
+      <td>4</td>
+      <td>regular_ll</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>301</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>20240201</td>
+      <td>0</td>
+      <td>4368</td>
+      <td>fcmean</td>
+      <td>46</td>
+      <td>regular_ll</td>
+    </tr>
+    <tr>
+      <th>302</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>20240201</td>
+      <td>0</td>
+      <td>4368</td>
+      <td>fcmean</td>
+      <td>47</td>
+      <td>regular_ll</td>
+    </tr>
+    <tr>
+      <th>303</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>20240201</td>
+      <td>0</td>
+      <td>4368</td>
+      <td>fcmean</td>
+      <td>48</td>
+      <td>regular_ll</td>
+    </tr>
+    <tr>
+      <th>304</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>20240201</td>
+      <td>0</td>
+      <td>4368</td>
+      <td>fcmean</td>
+      <td>49</td>
+      <td>regular_ll</td>
+    </tr>
+    <tr>
+      <th>305</th>
+      <td>ecmf</td>
+      <td>mn2t24</td>
+      <td>surface</td>
+      <td>0</td>
+      <td>20240201</td>
+      <td>0</td>
+      <td>4368</td>
+      <td>fcmean</td>
+      <td>50</td>
+      <td>regular_ll</td>
+    </tr>
+  </tbody>
+</table>
+<p>306 rows × 10 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;~/code/jnbs/seasonal/products_production_jnb/test_ek.grib&#39;</span><span class="p">)</span>  <span class="c1"># NOT WORKING - no error! works in cwd without ~</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xr_ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">to_xarray</span><span class="p">(</span><span class="n">xarray_open_dataset_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;backend_kwargs&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">time_dims</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;forecastMonth&#39;</span><span class="p">,</span> <span class="n">st_dim_name</span><span class="p">))})</span>
+<span class="n">xr_ds</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/</span><span class="si">{}</span><span class="s1">_mm_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_ek.nc&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">fc_yr</span><span class="p">,</span> <span class="n">st_mon</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="load-forecast-and-hindcast-data">
+<h2>Load forecast and hindcast data<a class="headerlink" href="#load-forecast-and-hindcast-data" title="Link to this heading">#</a></h2>
+<p>First, prepare for the lagged start time coordinates, where careful treatment is required when loading the data into xarray (if needed). MOVED THIS EARLIER.</p>
+<p>Now load the hindcast data as an xarray object using cfgrib: <strong>Update to new CDS approach?</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load hindcasts, sort time coords?</span>
+<span class="n">hc_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">var</span><span class="p">,</span> <span class="s1">&#39;mm&#39;</span><span class="p">,</span> <span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">hc_years</span><span class="p">,</span> <span class="n">st_mon</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;_ek.nc&#39;</span>
+<span class="n">hcst</span> <span class="o">=</span> <span class="n">earthkit</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">from_source</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="n">hc_path</span><span class="p">)</span>
+<span class="n">hcst</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span>
+<span class="c1"># hcst = xr.open_dataarray(hc_path, engine=&#39;cfgrib&#39;,</span>
+<span class="c1">#                          backend_kwargs=dict(time_dims=(&#39;forecastMonth&#39;, st_dim_name)))</span>
+<span class="c1"># # rename indexing time or time to start date</span>
+<span class="c1"># hcst = hcst.rename({st_dim_name: &#39;start_date&#39;, &#39;longitude&#39;: &#39;lon&#39;, &#39;latitude&#39;: &#39;lat&#39;})</span>
+<span class="c1"># # roll longitude</span>
+<span class="c1"># hcst = hcst.assign_coords(lon=(((hcst.lon + 180) % 360) - 180)).sortby(&#39;lon&#39;)</span>
+<span class="c1"># hcst</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variable</th>
+      <th>level</th>
+      <th>valid_datetime</th>
+      <th>units</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>1993-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>1994-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>1995-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>1996-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>1997-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3595</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>2012-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+    <tr>
+      <th>3596</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>2013-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+    <tr>
+      <th>3597</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>2014-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+    <tr>
+      <th>3598</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>2015-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+    <tr>
+      <th>3599</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>2016-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+  </tbody>
+</table>
+<p>3600 rows × 4 columns</p>
+</div></div></div>
+</div>
+<p>Now load the forecast data in the same manner:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fc_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">var</span><span class="p">,</span> <span class="s1">&#39;mm&#39;</span><span class="p">,</span> <span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">fc_yr</span><span class="p">,</span> <span class="n">st_mon</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;_ek.nc&#39;</span>
+<span class="n">fcst</span> <span class="o">=</span> <span class="n">earthkit</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">from_source</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="n">fc_path</span><span class="p">)</span>
+<span class="n">fcst</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span>
+<span class="c1"># # rename indexing time or time to start date</span>
+<span class="c1"># fcst = fcst.rename({st_dim_name: &#39;start_date&#39;, &#39;longitude&#39;: &#39;lon&#39;, &#39;latitude&#39;: &#39;lat&#39;})</span>
+<span class="c1"># # roll longitude</span>
+<span class="c1"># fcst = fcst.assign_coords(lon=(((fcst.lon + 180) % 360) - 180)).sortby(&#39;lon&#39;)</span>
+<span class="c1"># fcst</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variable</th>
+      <th>level</th>
+      <th>valid_datetime</th>
+      <th>units</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>2024-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>2024-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>2024-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>2024-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>2024-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>301</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>2024-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+    <tr>
+      <th>302</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>2024-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+    <tr>
+      <th>303</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>2024-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+    <tr>
+      <th>304</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>2024-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+    <tr>
+      <th>305</th>
+      <td>mn2t24</td>
+      <td>None</td>
+      <td>2024-02-01T00:00:00</td>
+      <td>K</td>
+    </tr>
+  </tbody>
+</table>
+<p>306 rows × 4 columns</p>
+</div></div></div>
+</div>
+<p>For the forecast array, we add a ‘valid time’ coordinate, which will be useful for labeling the plots later.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fcst</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NetCDFMetadata({&#39;GRIB_paramId&#39;: 52, &#39;GRIB_dataType&#39;: &#39;fcmean&#39;, &#39;GRIB_numberOfPoints&#39;: 64800, &#39;GRIB_typeOfLevel&#39;: &#39;surface&#39;, &#39;GRIB_stepUnits&#39;: 1, &#39;GRIB_stepType&#39;: &#39;instant&#39;, &#39;GRIB_gridType&#39;: &#39;regular_ll&#39;, &#39;GRIB_uvRelativeToGrid&#39;: 0, &#39;GRIB_NV&#39;: 0, &#39;GRIB_Nx&#39;: 360, &#39;GRIB_Ny&#39;: 180, &#39;GRIB_cfName&#39;: &#39;unknown&#39;, &#39;GRIB_cfVarName&#39;: &#39;mn2t24&#39;, &#39;GRIB_gridDefinitionDescription&#39;: &#39;Latitude/Longitude Grid&#39;, &#39;GRIB_iDirectionIncrementInDegrees&#39;: 1.0, &#39;GRIB_iScansNegatively&#39;: 0, &#39;GRIB_jDirectionIncrementInDegrees&#39;: 1.0, &#39;GRIB_jPointsAreConsecutive&#39;: 0, &#39;GRIB_jScansPositively&#39;: 0, &#39;GRIB_latitudeOfFirstGridPointInDegrees&#39;: 89.5, &#39;GRIB_latitudeOfLastGridPointInDegrees&#39;: -89.5, &#39;GRIB_longitudeOfFirstGridPointInDegrees&#39;: 0.5, &#39;GRIB_longitudeOfLastGridPointInDegrees&#39;: 359.5, &#39;GRIB_missingValue&#39;: 9999, &#39;GRIB_name&#39;: &#39;Minimum temperature at 2 metres in the last 24 hours&#39;, &#39;GRIB_shortName&#39;: &#39;mn2t24&#39;, &#39;GRIB_totalNumber&#39;: 0, &#39;GRIB_units&#39;: &#39;K&#39;, &#39;long_name&#39;: &#39;Minimum temperature at 2 metres in the last 24 hours&#39;, &#39;units&#39;: &#39;K&#39;, &#39;standard_name&#39;: &#39;unknown&#39;, &#39;date&#39;: 20240201, &#39;time&#39;: 0, &#39;variable&#39;: &#39;mn2t24&#39;, &#39;level&#39;: None, &#39;levtype&#39;: &#39;sfc&#39;})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">valid_time</span> <span class="o">=</span> <span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">fcst</span><span class="o">.</span><span class="n">start_date</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="o">+</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">months</span><span class="o">=</span><span class="n">fcmonth</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">fcmonth</span> <span class="ow">in</span> <span class="n">fcst</span><span class="o">.</span><span class="n">forecastMonth</span><span class="p">]</span>
+<span class="n">fcst</span> <span class="o">=</span> <span class="n">fcst</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">valid_time</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;forecastMonth&#39;</span><span class="p">,</span><span class="n">valid_time</span><span class="p">))</span>
+<span class="n">fcst</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="select-qualifying-ensemble-members">
+<h3>Select qualifying ensemble members<a class="headerlink" href="#select-qualifying-ensemble-members" title="Link to this heading">#</a></h3>
+<p>Here we select which ensemble members to use. For some lagged start systems a subset of the available ensemble members are used in the graphical products, as described in the <strong><a class="reference external" href="https://confluence.ecmwf.int/display/CKB/Summary+of+available+data#:~:text=per%20forecast%20system-,Nominal%20Start%20Dates,-For%20systems%20with">documentation</a></strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for some lagged systems sub-select &#39;qualifying&#39; ensemble members used in the C3S graphical products</span>
+<span class="k">if</span> <span class="n">lagged</span><span class="p">:</span>
+    <span class="n">max_hc</span> <span class="o">=</span> <span class="n">providers</span><span class="p">[</span><span class="n">prov</span><span class="p">][</span><span class="s1">&#39;max_hc&#39;</span><span class="p">]</span>
+    <span class="n">max_fc</span> <span class="o">=</span> <span class="n">providers</span><span class="p">[</span><span class="n">prov</span><span class="p">][</span><span class="s1">&#39;max_fc&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">max_hc</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">hcst</span> <span class="o">=</span> <span class="n">hcst</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_hc</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">max_fc</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">fcst</span> <span class="o">=</span> <span class="n">fcst</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_fc</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="produce-tercile-summary">
+<h2>Produce tercile summary<a class="headerlink" href="#produce-tercile-summary" title="Link to this heading">#</a></h2>
+<section id="calculate-tercile-summary-from-hindcasts">
+<h3>Calculate tercile summary from hindcasts<a class="headerlink" href="#calculate-tercile-summary-from-hindcasts" title="Link to this heading">#</a></h3>
+<p>The first step of calculating probabilities for the tercile summary is to calculate the terciles from the hindcast period.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">quantiles</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.</span> <span class="o">/</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">2.</span> <span class="o">/</span> <span class="mf">3.</span><span class="p">]</span>
+<span class="n">hcst_qbnds</span> <span class="o">=</span> <span class="n">hcst</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">quantiles</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;start_date&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">])</span>
+<span class="n">hcst_qbnds</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="compute-forecast-probabilities">
+<h3>Compute forecast probabilities<a class="headerlink" href="#compute-forecast-probabilities" title="Link to this heading">#</a></h3>
+<p>Now we calculate the forecast probabilities by counting the number of ensemble members above and below the upper and lower quartiles.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fc_ens</span> <span class="o">=</span> <span class="n">fcst</span><span class="o">.</span><span class="n">sizes</span><span class="p">[</span><span class="s1">&#39;number&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; ####### FC ENS SIZE ####### &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fc_ens</span><span class="p">)</span>
+<span class="c1"># ens_size = len(fcst_coords[&#39;realization&#39;][&#39;data&#39;])</span>
+<span class="n">above</span> <span class="o">=</span> <span class="n">fcst</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">fcst</span> <span class="o">&gt;</span> <span class="n">hcst_qbnds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">quantile</span><span class="o">=</span><span class="mf">2.</span> <span class="o">/</span> <span class="mf">3.</span><span class="p">))</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;number&#39;</span><span class="p">)</span>
+<span class="n">below</span> <span class="o">=</span> <span class="n">fcst</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">fcst</span> <span class="o">&lt;</span> <span class="n">hcst_qbnds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">quantile</span><span class="o">=</span><span class="mf">1.</span> <span class="o">/</span> <span class="mf">3.</span><span class="p">))</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;number&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we calculate probabilites for each tercile category (above, below, and normal), and combine them to create a single array to use for plotting the tercile summary.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">P_above</span> <span class="o">=</span> <span class="mf">100.</span> <span class="o">*</span> <span class="p">(</span><span class="n">above</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">fc_ens</span><span class="p">))</span>
+<span class="n">P_below</span> <span class="o">=</span> <span class="mf">100.</span> <span class="o">*</span> <span class="p">(</span><span class="n">below</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">fc_ens</span><span class="p">))</span>
+<span class="n">P_normal</span> <span class="o">=</span> <span class="mf">100.</span> <span class="o">-</span> <span class="p">(</span><span class="n">P_above</span> <span class="o">+</span> <span class="n">P_below</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">P_above</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">P_above</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mf">40.</span> <span class="o">+</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">P_above</span><span class="p">,</span> <span class="n">P_below</span><span class="p">),</span> <span class="mf">0.</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">P_below</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">P_below</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mf">40.</span> <span class="o">+</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">P_below</span><span class="p">,</span> <span class="n">P_above</span><span class="p">),</span> <span class="mf">0.</span><span class="p">)</span>
+<span class="n">P_summary</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+
+<span class="n">P_summary</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="plot-tercile-summary">
+<h2>Plot tercile summary<a class="headerlink" href="#plot-tercile-summary" title="Link to this heading">#</a></h2>
+<section id="plot-setup">
+<h3>Plot setup<a class="headerlink" href="#plot-setup" title="Link to this heading">#</a></h3>
+<p>Here we set up a directory for saving the plots, and set up some plot parameters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">figpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;/plots&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">figpath</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">figpath</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># levels to use when shading the plot, and corresponding colours</span>
+<span class="n">contour_levels</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">100.</span><span class="p">,</span> <span class="o">-</span><span class="mf">70.</span><span class="p">,</span> <span class="o">-</span><span class="mf">60.</span><span class="p">,</span> <span class="o">-</span><span class="mf">50.</span><span class="p">,</span> <span class="o">-</span><span class="mf">40.</span><span class="p">,</span> <span class="mf">40.</span><span class="p">,</span> <span class="mf">50.</span><span class="p">,</span> <span class="mf">60.</span><span class="p">,</span> <span class="mf">70.</span><span class="p">,</span> <span class="mf">100.</span><span class="p">]</span>
+<span class="n">contour_colours</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;navy&quot;</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="s2">&quot;deepskyblue&quot;</span><span class="p">,</span> <span class="s2">&quot;cyan&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="s2">&quot;yellow&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="s2">&quot;orangered&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:red&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="make-a-plot-for-each-lead-month">
+<h3>Make a plot for each lead month<a class="headerlink" href="#make-a-plot-for-each-lead-month" title="Link to this heading">#</a></h3>
+<p>Note: the C3S graphical products are contour plots rather than the grid mesh plots below</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">ltm</span> <span class="ow">in</span> <span class="n">lt_mons</span><span class="p">:</span>
+    <span class="n">lt_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ltm</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">plot_data</span> <span class="o">=</span> <span class="n">P_summary</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">forecastMonth</span><span class="o">=</span><span class="n">ltm</span><span class="p">)</span>  <span class="c1"># extract the specific forecast month</span>
+    
+    <span class="n">valid_time</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">plot_data</span><span class="o">.</span><span class="n">valid_time</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">vm_str</span> <span class="o">=</span> <span class="n">valid_time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b&#39;</span><span class="p">)</span>  <span class="c1"># valid month string to label the plot</span>
+    <span class="n">title_txt1</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> system=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;, Probability most likely category (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">var_str</span><span class="p">)</span>
+    <span class="n">title_txt2</span> <span class="o">=</span> <span class="s1">&#39;start date = </span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">, valid month: </span><span class="si">{}</span><span class="s1"> (leadtime_month = </span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fc_yr</span><span class="p">,</span> <span class="n">st_mon</span><span class="p">,</span> <span class="n">vm_str</span><span class="p">,</span> <span class="n">lt_str</span><span class="p">)</span>
+
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">BORDERS</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">COASTLINE</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.</span><span class="p">)</span>
+    <span class="n">plot_data</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">levels</span><span class="o">=</span><span class="n">contour_levels</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">contour_colours</span><span class="p">,</span>
+                                               <span class="n">cbar_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fraction&#39;</span><span class="p">:</span> <span class="mf">0.033</span><span class="p">})</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title_txt1</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">title_txt2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">figname</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;tercile_summary&#39;</span><span class="p">,</span> <span class="n">var_str</span><span class="p">,</span> <span class="s1">&#39;mm&#39;</span><span class="p">,</span> <span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">fc_yr</span><span class="p">,</span> <span class="n">st_mon</span><span class="p">,</span> <span class="s1">&#39;lead&#39;</span><span class="p">,</span> <span class="n">lt_str</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">figpath</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">figname</span> <span class="o">+</span> <span class="s1">&#39;.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="produce-ensemble-mean-anomaly">
+<h2>Produce ensemble mean anomaly<a class="headerlink" href="#produce-ensemble-mean-anomaly" title="Link to this heading">#</a></h2>
+<p>Here we calculate the ensemble mean anomaly. To create a multi-system ensemble mean anomaly this needs to be done for each system, and save for use in another Jupyter Notebook (<strong>retain this and link to the further example when ready?</strong>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hcst_clim</span> <span class="o">=</span> <span class="n">hcst</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="s1">&#39;start_date&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">])</span>  <span class="c1"># mean climatology for each lead time for the chosen start</span>
+<span class="n">fcst_anom</span> <span class="o">=</span> <span class="n">fcst</span> <span class="o">-</span> <span class="n">hcst_clim</span>
+<span class="n">fcst_anom_mean</span> <span class="o">=</span> <span class="n">fcst_anom</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="s1">&#39;number&#39;</span><span class="p">])</span>
+<span class="n">fcst_anom_mean</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Save the ensemble mean anomaly for use in other Notebooks.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">save_name</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">var</span><span class="p">,</span> <span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">fc_yr</span><span class="p">,</span> <span class="n">st_mon</span><span class="p">,</span> <span class="s1">&#39;ensmean_anom.nc&#39;</span><span class="p">])</span>
+<span class="n">fcst_anom_mean</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">data_path</span><span class="p">,</span> <span class="n">save_name</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="plot-ensemble-mean-anomaly">
+<h2>Plot ensemble mean anomaly<a class="headerlink" href="#plot-ensemble-mean-anomaly" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3>Plot setup<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Note, the level values will need to be updated for variables other than Tmin/Tmax/Tmean.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># specific values for Tmax, need dictionary for this</span>
+<span class="n">contour_levels</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">2.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]</span>
+<span class="n">contour_colours</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;navy&quot;</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="s2">&quot;deepskyblue&quot;</span><span class="p">,</span> <span class="s2">&quot;cyan&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="s2">&quot;yellow&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="s2">&quot;orangered&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:red&quot;</span><span class="p">]</span>
+<span class="c1"># clip the data to -2 and 2</span>
+<span class="n">fcst_anom_mean</span> <span class="o">=</span> <span class="n">fcst_anom_mean</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="nb">min</span><span class="o">=-</span><span class="mf">1.99</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">1.99</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id2">
+<h3>Make a plot for each lead month<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>As for the tercile probability summary, we plot a chart for each forcast month. Here no significance testing is applied, but this will be added in the next step (<strong>in this case, should we only plot one month here, for comparison/to show the difference?</strong>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">ltm</span> <span class="ow">in</span> <span class="n">lt_mons</span><span class="p">:</span>
+    <span class="n">lt_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ltm</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">plot_data</span> <span class="o">=</span> <span class="n">fcst_anom_mean</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">forecastMonth</span><span class="o">=</span><span class="n">ltm</span><span class="p">)</span>  <span class="c1"># extract the specific forecast month</span>
+    
+    <span class="n">valid_time</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">plot_data</span><span class="o">.</span><span class="n">valid_time</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">vm_str</span> <span class="o">=</span> <span class="n">valid_time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b&#39;</span><span class="p">)</span>  <span class="c1"># valid month string to label the plot</span>
+    <span class="n">title_txt1</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> system=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;, Ensemble mean anomaly (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">var_str</span><span class="p">)</span>
+    <span class="n">title_txt2</span> <span class="o">=</span> <span class="s1">&#39;Start date = </span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">, valid month: </span><span class="si">{}</span><span class="s1"> (leadtime_month </span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fc_yr</span><span class="p">,</span> <span class="n">st_mon</span><span class="p">,</span> <span class="n">vm_str</span><span class="p">,</span> <span class="n">lt_str</span><span class="p">)</span>
+
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">BORDERS</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">COASTLINE</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.</span><span class="p">)</span>
+    <span class="n">plot_data</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">levels</span><span class="o">=</span><span class="n">contour_levels</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">contour_colours</span><span class="p">,</span>
+                                               <span class="n">cbar_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fraction&#39;</span><span class="p">:</span> <span class="mf">0.033</span><span class="p">,</span> <span class="s1">&#39;extend&#39;</span><span class="p">:</span> <span class="s1">&#39;neither&#39;</span><span class="p">})</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title_txt1</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">title_txt2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">figname</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;ens_mean&#39;</span><span class="p">,</span> <span class="n">var_str</span><span class="p">,</span> <span class="s1">&#39;mm&#39;</span><span class="p">,</span> <span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">fc_yr</span><span class="p">,</span> <span class="n">st_mon</span><span class="p">,</span> <span class="s1">&#39;lead&#39;</span><span class="p">,</span> <span class="n">lt_str</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">figpath</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">figname</span> <span class="o">+</span> <span class="s1">&#39;.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="add-significance-contours-and-masking">
+<h3>Add significance contours and masking<a class="headerlink" href="#add-significance-contours-and-masking" title="Link to this heading">#</a></h3>
+<p>The single-system ensemble mean plots in the C3S seasonal graphical products also include significance testing, following the approach taken for SEAS5 products (see <a class="reference external" href="https://www.ecmwf.int/sites/default/files/medialibrary/2017-10/System5_guide.pdf">https://www.ecmwf.int/sites/default/files/medialibrary/2017-10/System5_guide.pdf</a>). Anomaly values below the 10% significance level are masked out, and significance countours are drawn for 1% and 10%. Note, due to the significance testing this cell takes longer to run than the previous one. Note that the colorbar requires customisation to represent the masking in a similar manner to the graphical products.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Function for non-paired rank-sum test</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">mannwhitneyu</span>
+
+<span class="c1"># Significance thresholds</span>
+<span class="n">pval_thresh_low</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">pval_thresh_high</span> <span class="o">=</span> <span class="mf">0.01</span>
+
+<span class="k">for</span> <span class="n">ltm</span> <span class="ow">in</span> <span class="n">lt_mons</span><span class="p">:</span>
+    
+    <span class="n">data1</span> <span class="o">=</span> <span class="n">hcst</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">forecastMonth</span><span class="o">=</span><span class="n">ltm</span><span class="p">)</span>
+    <span class="n">data2</span> <span class="o">=</span> <span class="n">fcst</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">forecastMonth</span><span class="o">=</span><span class="n">ltm</span><span class="p">)</span>
+ 
+    <span class="c1"># need to flatten number and start date to simply &#39;samples&#39;</span>
+    <span class="c1"># proceed in numpy for simplicity</span>
+    <span class="n">data1</span> <span class="o">=</span> <span class="n">data1</span><span class="o">.</span><span class="n">data</span>  <span class="c1"># includes member and start date</span>
+    <span class="n">data2</span> <span class="o">=</span> <span class="n">data2</span><span class="o">.</span><span class="n">data</span>  <span class="c1"># includes member</span>
+
+    <span class="c1"># flatten sample dimensions</span>
+    <span class="n">data1</span> <span class="o">=</span> <span class="n">data1</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="n">data1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span>  <span class="c1"># lat lon are the last dimensions</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Flattened forecasts: &#39;</span><span class="p">,</span> <span class="n">data1</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="c1"># non-paired approach, need to use Mann–Whitney U test</span>
+    <span class="n">pvals2</span> <span class="o">=</span> <span class="n">mannwhitneyu</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">)</span>
+    <span class="n">pvals2</span><span class="o">.</span><span class="n">pvalue</span>
+    
+    <span class="n">masked_anom_mean</span> <span class="o">=</span> <span class="n">fcst_anom_mean</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">forecastMonth</span><span class="o">=</span><span class="n">ltm</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">pvals2</span><span class="o">.</span><span class="n">pvalue</span> <span class="o">&lt;=</span> <span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="c1"># specific values for Tmax, adjusted to add a dummy white section to label as &#39;no signal&#39;</span>
+    <span class="n">contour_levels</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">2.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1e-15</span><span class="p">,</span> <span class="mf">1e-15</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]</span>  <span class="c1"># dummy values to plot central white portion in colorbar</span>
+    <span class="n">cbar_colours</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;navy&quot;</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="s2">&quot;deepskyblue&quot;</span><span class="p">,</span> <span class="s2">&quot;cyan&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="s2">&quot;yellow&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="s2">&quot;orangered&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:red&quot;</span><span class="p">]</span>
+    <span class="n">cbar_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&lt;-1.5&quot;</span><span class="p">,</span> <span class="s2">&quot;-1.5..-1.0&quot;</span><span class="p">,</span> <span class="s2">&quot;-1.0..-0.5&quot;</span><span class="p">,</span> <span class="s2">&quot;-0.5..0&quot;</span><span class="p">,</span> <span class="s2">&quot;no signal&quot;</span><span class="p">,</span> <span class="s2">&quot;0..0.5&quot;</span><span class="p">,</span> <span class="s2">&quot;0.5..1.0&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0..1.5&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt;1.5&quot;</span><span class="p">]</span>
+    
+    <span class="n">lt_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ltm</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">valid_time</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">plot_data</span><span class="o">.</span><span class="n">valid_time</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">vm_str</span> <span class="o">=</span> <span class="n">valid_time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b&#39;</span><span class="p">)</span>  <span class="c1"># valid month string to label the plot</span>
+    <span class="n">title_txt1</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> system=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;, Ensemble mean anomaly (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">var_str</span><span class="p">)</span>
+    <span class="n">title_txt2</span> <span class="o">=</span> <span class="s1">&#39;Start date = </span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">, valid month: </span><span class="si">{}</span><span class="s1"> (leadtime_month </span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fc_yr</span><span class="p">,</span> <span class="n">st_mon</span><span class="p">,</span> <span class="n">vm_str</span><span class="p">,</span> <span class="n">lt_str</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">title_txt1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">title_txt2</span><span class="p">)</span>
+
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">BORDERS</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">cfeature</span><span class="o">.</span><span class="n">COASTLINE</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.</span><span class="p">)</span>
+    <span class="c1"># masked_anom_mean.plot(levels=contour_levels, colors=contour_colours,</span>
+    <span class="c1">#                                            cbar_kwargs={&#39;fraction&#39;: 0.033, &#39;extend&#39;: &#39;neither&#39;})</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">masked_anom_mean</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">levels</span><span class="o">=</span><span class="n">contour_levels</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">cbar_colours</span><span class="p">,</span> <span class="n">add_colorbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">fraction</span><span class="o">=</span><span class="mf">0.023</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s1">&#39;neither&#39;</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">1.75</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.25</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.75</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">,</span> <span class="mf">1.75</span><span class="p">])</span>
+    <span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">cbar_labels</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">masked_anom_mean</span><span class="o">.</span><span class="n">lon</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">masked_anom_mean</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">pvals2</span><span class="o">.</span><span class="n">pvalue</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title_txt1</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">title_txt2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">figname</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;ens_mean&#39;</span><span class="p">,</span> <span class="n">var_str</span><span class="p">,</span> <span class="s1">&#39;mm&#39;</span><span class="p">,</span> <span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">fc_yr</span><span class="p">,</span> <span class="n">st_mon</span><span class="p">,</span> <span class="s1">&#39;lead&#39;</span><span class="p">,</span> <span class="n">lt_str</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">figpath</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">figname</span> <span class="o">+</span> <span class="s1">&#39;_masked.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>These plots are similar to the monthly C3S graphical products. Note that here we have plotted the first month of the forecast (February, or leadtime_month = 1), while in the graphical products we show the monthly forecasts starting with the month following the release month (which would be March in this case). The three-month aggregations in the graphical products could be created in a similar manner, by combining the corresponding monthly means.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./workflows"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cds-api-requests">CDS API requests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-forecast-and-hindcast-data">Load forecast and hindcast data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#select-qualifying-ensemble-members">Select qualifying ensemble members</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#produce-tercile-summary">Produce tercile summary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-tercile-summary-from-hindcasts">Calculate tercile summary from hindcasts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-forecast-probabilities">Compute forecast probabilities</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-tercile-summary">Plot tercile summary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-setup">Plot setup</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-a-plot-for-each-lead-month">Make a plot for each lead month</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#produce-ensemble-mean-anomaly">Produce ensemble mean anomaly</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-ensemble-mean-anomaly">Plot ensemble mean anomaly</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Plot setup</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Make a plot for each lead month</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-significance-contours-and-masking">Add significance contours and masking</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By the Copernicus Climate Change Service (C3S), entrusted to ECMWF (European Centre for Medium-Range Weather Forecasts)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

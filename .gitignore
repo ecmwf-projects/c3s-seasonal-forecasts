@@ -6,6 +6,7 @@ __MACOSX/
 # Ignore data and figure directories
 */data/*
 */figures/*
+*/cachedir/*
 
 # Created by https://www.toptal.com/developers/gitignore/api/jupyternotebooks,python,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=jupyternotebooks,python,visualstudiocode

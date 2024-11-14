@@ -2,16 +2,14 @@
 
 # C3S seasonal forecast applications and workflows
 
-This Jupyter Book contains a collection of quality assessments of C3S data produced by external evaluators under the C3S2_520 contract, which provides an **evaluation and quality control (EQC)** function for selected datasets on the climate data store (CDS).
-
-C3S has established an EQC framework for all its products and services to ensure that users are served well and that this will continue to be the case as their needs evolve. The main goal of the EQC for CDS datasets function is to develop precise statements about data quality that pertain to well-identified use cases. Those statements, in combination with other documented information about the datasets, constitute a knowledge base that can help users to assess fitness for purpose, given their needs and requirements. 
+This Jupyter Book contains a collection of Jupyter Notebooks related to the C3S seasonal forecast service. This complements the data tutorials available in the C3S training Jupyter Book, by showing how some of the data or graphical products are created, as well as by exploring some additional properties of the data.
 
 1. [Workflows related to graphical products](workflows/prod_workflows.md)
 2. [Additional analysis using C3S seasonal data](workflows/extra_analysis.md)
 
 ## Running the Notebooks
 
-This Jupyter Book provides practical examples of data processing of C3S seasonal data available from the CDS. The workflows and examples are in the form of [Jupyter notebooks](https://jupyter.org/). You may use a selection of cloud-based services to run, edit, export or create new notebooks, although some may exceed the free compute resources allocate by those platforms. These include the following:
+This Jupyter Book provides practical examples of data processing of C3S seasonal data available from the CDS. The workflows and examples are in the form of [Jupyter Notebooks](https://jupyter.org/). You may use a selection of cloud-based services to run, edit, export or create new notebooks, although some may exceed the free compute resources allocate by those platforms. These include the following:
 
 |Binder|Kaggle|Colab|
 |:-:|:-:|:-:|
@@ -20,7 +18,7 @@ This Jupyter Book provides practical examples of data processing of C3S seasonal
 
 [WEkEo](https://www.wekeo.eu/computing), funded by Copernicus, also offers free compute services which could also be used for this purpose.
 
-If you would like to run these notebooks in your own environment, we suggest you install [Anaconda](https://docs.anaconda.com/anaconda/install/), which contains most of the libraries you will need. You will also need to install [Xarray](http://xarray.pydata.org/en/stable/) for working with multidimensional data in netcdf files, and the CDS API (`pip install cdsapi`) for downloading data programatically from the CDS.
+If you would like to run these notebooks in your own environment, we suggest you install [Anaconda](https://docs.anaconda.com/anaconda/install/), which contains most of the libraries you will need. You will also need to install [Xarray](http://xarray.pydata.org/en/stable/) for working with multidimensional data in netcdf files, and the CDS API (`pip install cdsapi`) for downloading data programmatically from the CDS.
 
 ```{note}
  [Earthkit](https://github.com/ecmwf/earthkit), currently under development at ECMWF, aims to simplify accessing, processing and plotting climate and weather data in a format agnostic manner, but is not extensively used here to be as explicit and transparent in the code as possible. However, some hints may be given on how Earthkit can be used. 

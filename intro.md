@@ -2,7 +2,7 @@
 
 # C3S seasonal forecast applications and workflows
 
-This Jupyter Book contains a collection of Jupyter Notebooks related to the C3S seasonal forecast service. This compliments the data tutorials available in the C3S training Jupyter Book, by showing how some of the data or graphical products are created, as well as by exploring some additional properties of the data.
+This Jupyter Book contains a collection of Jupyter Notebooks related to the C3S seasonal forecast service. This compliments the data tutorials available in the [C3S training Jupyter Book](https://ecmwf-projects.github.io/copernicus-training-c3s/intro.html), by showing how some of the data or graphical products are created, as well as by exploring some additional properties of the data.
 
 1. [Workflows related to graphical products](workflows/prod_workflows.md)
 2. [Additional analysis using C3S seasonal data](workflows/extra_analysis.md)

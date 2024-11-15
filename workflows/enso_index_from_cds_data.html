@@ -411,12 +411,6 @@ document.write(`
 <p>In this example we how to compute the El Niño–Southern Oscillation (ENSO) indices used in <a class="reference external" href="https://climate.copernicus.eu/charts/packages/c3s_seasonal/">C3S seasonal graphical products</a>, from ERA5 SST data retrieved from the CDS. This is also shown for one seasonal forecast system, computing some ENSO indices over the hindcast period.</p>
 <p>In a complementary Notebook, the indices prepared here we be used to compute the correlation heatmaps displayed for the SST indices on the <a class="reference external" href="https://confluence.ecmwf.int/display/CKB/C3S+seasonal+forecasts+verification+plots">verification page</a>.</p>
 <p>Some information on ENSO impacts in Europe can be found on <a class="reference external" href="https://confluence.ecmwf.int/display/COPSRV/ENSO+impacts+on+Europe">a page in the C3S documentation</a>.</p>
-<ol class="arabic simple">
-<li><p><a class="reference internal" href="#configuration"><span class="xref myst">Configuration</span></a></p></li>
-<li><p><a class="reference internal" href="#cds-api-requests"><span class="xref myst">CDS API requests</span></a></p></li>
-<li><p><a class="reference internal" href="#define-enso-regions"><span class="xref myst">Define ENSO regions</span></a></p></li>
-<li><p><a class="reference internal" href="#compute-indices"><span class="xref myst">Compute indices</span></a></p></li>
-</ol>
 <section id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h2>
 <p>Import required modules and configure CDS API key and client.</p>
@@ -530,7 +524,7 @@ document.write(`
 <strong>Download format</strong>: <code class="docutils literal notranslate"><span class="pre">unarchived</span></code> <em>returned file is not zipped</em><br></p>
 <div class="cell tag_hide-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_path</span> <span class="o">=</span> <span class="s1">&#39;/data&#39;</span> <span class="c1"># REPLACE BEFORE PUBLICATION</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_path</span> <span class="o">=</span> <span class="s1">&#39;/data&#39;</span>
 
 <span class="n">dataset</span> <span class="o">=</span> <span class="s2">&quot;reanalysis-era5-single-levels-monthly-means&quot;</span>
 <span class="n">request</span> <span class="o">=</span> <span class="p">{</span>

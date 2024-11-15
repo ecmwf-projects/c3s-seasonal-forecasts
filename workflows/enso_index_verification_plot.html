@@ -1,0 +1,1212 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Producing the ENSO index verification heatmaps &#8212; c3sSeasonal</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'workflows/enso_index_verification_plot';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+
+  <div class="bd-header-announcement container-fluid bd-header-announcement">
+    <div class="bd-header-announcement__content">⚠️This is under development!⚠️</div>
+  </div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/C3S–POS–LINE.png" class="logo__image only-light" alt="c3sSeasonal - Home"/>
+    <script>document.write(`<img src="../_static/C3S–POS–LINE.png" class="logo__image only-dark" alt="c3sSeasonal - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    C3S seasonal forecast applications and workflows
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">➡️ Product Workflows</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="prod_workflows.html">Workflows related to graphical products</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="enso_index_from_cds_data.html">Deriving ENSO indices used in C3S graphical products from CDS data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graphical_product_example_tmin.html">Reproducing the single-system graphical products for additional variables</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">➡️ Additional Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="extra_analysis.html">Extra analysis using C3S seasonal data</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ecmwf-projects/c3s_eqc_book_main" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ecmwf-projects/c3s_eqc_book_main/issues/new?title=Issue%20on%20page%20%2Fworkflows/enso_index_verification_plot.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/workflows/enso_index_verification_plot.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Producing the ENSO index verification heatmaps</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-the-pre-computed-era5-indices-and-prepare-to-compute-correlations">Load the pre-computed ERA5 indices and prepare to compute correlations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loop-over-the-hindcast-start-months-and-compute-correlations">Loop over the hindcast start months and compute correlations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-the-correlation-heatmaps">Plot the correlation heatmaps</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p><img alt="logo" src="../_images/LogoLine_horizon_C3S.png" /></p>
+<section class="tex2jax_ignore mathjax_ignore" id="producing-the-enso-index-verification-heatmaps">
+<h1>Producing the ENSO index verification heatmaps<a class="headerlink" href="#producing-the-enso-index-verification-heatmaps" title="Link to this heading">#</a></h1>
+<p>In this example we use the computed El Niño–Southern Oscillation (ENSO) indices from <a class="reference internal" href="enso_index_from_cds_data.html"><span class="std std-doc">the previous Notebook</span></a> to produce heatmaps of temporal correlations, as included on the C3S seasonal <a class="reference external" href="https://confluence.ecmwf.int/display/CKB/C3S+seasonal+forecasts+verification+plots">verification page</a>.</p>
+<p>Some information on ENSO impacts in Europe can be found on <a class="reference external" href="https://confluence.ecmwf.int/display/COPSRV/ENSO+impacts+on+Europe">a page in the C3S documentation</a>.</p>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h2>
+<p>Import required modules and define some parameters related to the indices previously computed.</p>
+<div class="cell tag_hide-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">import</span> <span class="nn">regionmask</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">BoundaryNorm</span>
+<span class="kn">from</span> <span class="nn">dateutils</span> <span class="kn">import</span> <span class="n">relativedelta</span>
+
+<span class="c1"># dictionary of systems, versions and attributes</span>
+<span class="n">providers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;ecmf.s51&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;ecmwf&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;ECMWF&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;SEAS5&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_system&#39;</span><span class="p">:</span> <span class="s1">&#39;51&#39;</span><span class="p">,</span> <span class="s1">&#39;hcsize&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span>
+                 <span class="s1">&#39;fcsize&#39;</span><span class="p">:</span> <span class="mi">51</span><span class="p">,</span> <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+    <span class="s1">&#39;lfpw.s8&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;meteo_france&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Météo-France&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;System 8&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_system&#39;</span><span class="p">:</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;hcsize&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span> <span class="s1">&#39;fcsize&#39;</span><span class="p">:</span> <span class="mi">51</span><span class="p">,</span> <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+    <span class="s1">&#39;egrr.s602&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;ukmo&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Met Office&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;GloSea6&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_system&#39;</span><span class="p">:</span> <span class="s1">&#39;602&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;hcsize&#39;</span><span class="p">:</span> <span class="mi">28</span><span class="p">,</span> <span class="s1">&#39;fcsize&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span> <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+    <span class="c1"># &#39;egrr.s603&#39;: {&#39;cds_name&#39;: &#39;ukmo&#39;, &#39;plot_name&#39;: &#39;Met Office&#39;, &#39;plot_system&#39;: &#39;GloSea6&#39;, &#39;cds_system&#39;: &#39;603&#39;,</span>
+    <span class="c1">#               &#39;hcsize&#39;: 28, &#39;fcsize&#39;: 60, &#39;lagged&#39;: True},</span>
+    <span class="s1">&#39;edzw.s21&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;dwd&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;DWD&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;GCFS2.1&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_system&#39;</span><span class="p">:</span> <span class="s1">&#39;21&#39;</span><span class="p">,</span> <span class="s1">&#39;hcsize&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+                 <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+    <span class="s1">&#39;cmcc.s35&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;cmcc&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;CMCC&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;SPS3.5&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_system&#39;</span><span class="p">:</span> <span class="s1">&#39;35&#39;</span><span class="p">,</span> <span class="s1">&#39;hcsize&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+                 <span class="s1">&#39;fcsize&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+   <span class="s1">&#39;kwbc.s2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;ncep&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;NCEP&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;CFSv2&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_system&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;hcsize&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+               <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+    <span class="s1">&#39;rjtd.s3&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;jma&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;JMA&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;CPS3&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_system&#39;</span><span class="p">:</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;hcsize&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                <span class="s1">&#39;fcsize&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+    <span class="s1">&#39;cwao.s2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;eccc&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;ECCC&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;CanCM4i&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_system&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;hcsize&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                <span class="s1">&#39;fcsize&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+    <span class="s1">&#39;cwao.s3&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;cds_name&#39;</span><span class="p">:</span> <span class="s1">&#39;eccc&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;ECCC&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;GEM5-NEMO&#39;</span><span class="p">,</span> <span class="s1">&#39;cds_system&#39;</span><span class="p">:</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;hcsize&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                <span class="s1">&#39;fcsize&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+    <span class="c1"># &#39;cwao.s4&#39;: {&#39;cds_name&#39;: &#39;eccc&#39;, &#39;plot_name&#39;: &#39;ECCC&#39;, &#39;plot_system&#39;: &#39;CanESM5.1p1bc&#39;, &#39;cds_system&#39;: &#39;4&#39;, &#39;hcsize&#39;: 10,</span>
+    <span class="c1">#             &#39;fcsize&#39;: 10, &#39;lagged&#39;: False},</span>
+    <span class="c1"># &#39;cwao.s5&#39;: {&#39;cds_name&#39;: &#39;eccc&#39;, &#39;plot_name&#39;: &#39;ECCC&#39;, &#39;plot_system&#39;: &#39;GEM5.2-NEMO&#39;, &#39;cds_system&#39;: &#39;5&#39;, &#39;hcsize&#39;: 10,</span>
+    <span class="c1">#             &#39;fcsize&#39;: 10, &#39;lagged&#39;: False},</span>
+<span class="p">}</span>
+
+<span class="c1"># select a system and version</span>
+<span class="n">prov</span> <span class="o">=</span> <span class="s1">&#39;lfpw.s8&#39;</span>
+<span class="n">centre</span> <span class="o">=</span> <span class="n">providers</span><span class="p">[</span><span class="n">prov</span><span class="p">][</span><span class="s1">&#39;cds_name&#39;</span><span class="p">]</span>
+<span class="n">version</span> <span class="o">=</span> <span class="n">providers</span><span class="p">[</span><span class="n">prov</span><span class="p">][</span><span class="s1">&#39;cds_system&#39;</span><span class="p">]</span>
+<span class="c1"># define the common hindcast period</span>
+<span class="n">hc_period</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1993&#39;</span><span class="p">,</span> <span class="s1">&#39;2016&#39;</span><span class="p">]</span>
+<span class="n">hc_str</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">hc_period</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">hc_period</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="c1"># the data path where the indices were saved</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="s1">&#39;/data&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="load-the-pre-computed-era5-indices-and-prepare-to-compute-correlations">
+<h2>Load the pre-computed ERA5 indices and prepare to compute correlations<a class="headerlink" href="#load-the-pre-computed-era5-indices-and-prepare-to-compute-correlations" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load in reanalysis</span>
+<span class="n">era5_file_name</span> <span class="o">=</span> <span class="s1">&#39;/era_5_nino_ind_1993_2016.nc&#39;</span>
+<span class="n">era5_ind</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataarray</span><span class="p">(</span><span class="n">data_path</span> <span class="o">+</span> <span class="n">era5_file_name</span><span class="p">)</span>
+<span class="n">era5_ind</span>
+<span class="c1"># create a correlation array</span>
+<span class="n">corr</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="loop-over-the-hindcast-start-months-and-compute-correlations">
+<h2>Loop over the hindcast start months and compute correlations<a class="headerlink" href="#loop-over-the-hindcast-start-months-and-compute-correlations" title="Link to this heading">#</a></h2>
+<p>Loop over the start months. For each start month do the following:</p>
+<ul class="simple">
+<li><p>deal with the missing Jan 1993 start if the centre is <code class="docutils literal notranslate"><span class="pre">ukmo</span></code></p></li>
+<li><p>create a copy of the ERA5 array (to rearrange to match the valid times of the start month in question)</p></li>
+<li><p>read in the hindcast index for the given start, and refactor to include valid time</p></li>
+<li><p>sub-select <a class="reference external" href="https://confluence.ecmwf.int/display/CKB/Summary+of+available+data#:~:text=per%20forecast%20system-,Nominal%20Start%20Dates,-For%20systems%20with">qualifying ensemble members</a>, if needed (for lagged start systems where not all dates are used in the graphical products)</p></li>
+<li><p>refactor the ERA5 array to allign with the hindcast leadtimes</p></li>
+<li><p>for each leadmonth compute the temporal correlation</p></li>
+<li><p>combine the lead month correlations and append to the array of correlations by start month</p></li>
+</ul>
+<p>The result is an array of temporal correlations for each start month and lead month.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">stmonth</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;START MONTH = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stmonth</span><span class="p">))</span>
+    <span class="c1"># Note that if the chosen system does not yet have all starts then this needs to be dealt with here</span>
+    <span class="c1"># This also includes January 1993 for UKMO meaning the ERA5 data needs to be adjusted to match this</span>
+    <span class="c1"># Met office systems missing data - start month</span>
+    <span class="k">if</span> <span class="n">centre</span> <span class="o">==</span> <span class="s1">&#39;ukmo&#39;</span> <span class="ow">and</span> <span class="n">stmonth</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># edit config to deal with Jan 1993 data gap in met office data</span>
+        <span class="n">hc_period</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1994&#39;</span>
+        <span class="n">o</span> <span class="o">=</span> <span class="n">era5_ind</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="n">hc_period</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">hc_period</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">o</span> <span class="o">=</span> <span class="n">era5_ind</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># READ HCST DATAFRAME FOR GIVEN START</span>
+    <span class="n">hc_file_name</span> <span class="o">=</span> <span class="s1">&#39;/</span><span class="si">{}</span><span class="s1">_mm_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_st_</span><span class="si">{}</span><span class="s1">_nino_ind.nc&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;sst&#39;</span><span class="p">,</span> <span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">hc_str</span><span class="p">,</span> <span class="n">stmonth</span><span class="p">)</span>
+    <span class="n">hcst</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataarray</span><span class="p">(</span><span class="n">data_path</span> <span class="o">+</span> <span class="n">hc_file_name</span><span class="p">)</span>
+    <span class="n">hcst</span> <span class="o">=</span> <span class="n">hcst</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="s1">&#39;start_date&#39;</span><span class="p">})</span>
+
+    <span class="c1">#hcst = hcst.reset_coords(names=&quot;valid_time&quot;, drop=True)</span>
+    <span class="n">vt</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">dims</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;start_date&#39;</span><span class="p">,</span> <span class="s1">&#39;forecastMonth&#39;</span><span class="p">),</span>
+                      <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;forecastMonth&#39;</span><span class="p">:</span> <span class="n">hcst</span><span class="o">.</span><span class="n">forecastMonth</span><span class="p">,</span> <span class="s1">&#39;start_date&#39;</span><span class="p">:</span> <span class="n">hcst</span><span class="o">.</span><span class="n">start_date</span><span class="p">})</span>
+    <span class="n">vt</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">std</span><span class="p">)</span> <span class="o">+</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">months</span><span class="o">=</span><span class="n">fcmonth</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">fcmonth</span> <span class="ow">in</span> <span class="n">vt</span><span class="o">.</span><span class="n">forecastMonth</span><span class="o">.</span><span class="n">values</span><span class="p">]</span> <span class="k">for</span>
+               <span class="n">std</span>
+               <span class="ow">in</span> <span class="n">vt</span><span class="o">.</span><span class="n">start_date</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
+    <span class="n">hcst</span> <span class="o">=</span> <span class="n">hcst</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">valid_time</span><span class="o">=</span><span class="n">vt</span><span class="p">)</span>
+    <span class="c1"># select qualifying ensemble members</span>
+    <span class="k">if</span> <span class="n">prov</span> <span class="o">==</span> <span class="s1">&#39;kwbc.s2&#39;</span><span class="p">:</span>  <span class="c1"># Only case where member sub-selection is needed from the CDS data</span>
+        <span class="n">hcst</span> <span class="o">=</span> <span class="n">hcst</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">19</span><span class="p">))</span>
+
+    <span class="c1"># refactor reanalysis to allign with hindcast leadtimes</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="s1">&#39;start_date&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">swap_dims</span><span class="p">({</span><span class="s1">&#39;start_date&#39;</span><span class="p">:</span> <span class="s1">&#39;valid_time&#39;</span><span class="p">})</span>
+    <span class="n">fcmonths</span> <span class="o">=</span> <span class="p">[</span><span class="n">mm</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">mm</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">mm</span> <span class="o">+</span> <span class="mi">13</span> <span class="k">for</span> <span class="n">mm</span> <span class="ow">in</span>
+                <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">month</span> <span class="o">-</span> <span class="n">stmonth</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">valid_time</span><span class="o">.</span><span class="n">values</span><span class="p">)]]</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">forecastMonth</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;valid_time&#39;</span><span class="p">,</span> <span class="n">fcmonths</span><span class="p">))</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">o</span><span class="p">[</span><span class="s1">&#39;forecastMonth&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">6</span><span class="p">)]</span>
+    
+    <span class="c1"># loop over forecast month, define the hindcast mean over the ensemble members, and compute the correlation over the hindcast years</span>
+    <span class="n">l_corr</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">l_corr_det</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">this_fcmonth</span> <span class="ow">in</span> <span class="n">hcst</span><span class="o">.</span><span class="n">forecastMonth</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+        <span class="n">thishcst</span> <span class="o">=</span> <span class="p">(</span><span class="n">hcst</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">forecastMonth</span><span class="o">=</span><span class="n">this_fcmonth</span><span class="p">)</span><span class="o">.</span><span class="n">swap_dims</span><span class="p">({</span><span class="s1">&#39;start_date&#39;</span><span class="p">:</span> <span class="s1">&#39;valid_time&#39;</span><span class="p">}))</span>
+        <span class="n">thishcst</span> <span class="o">=</span> <span class="n">thishcst</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="s1">&#39;number&#39;</span><span class="p">)</span>
+        <span class="n">thisobs</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">valid_time</span> <span class="o">==</span> <span class="n">thishcst</span><span class="o">.</span><span class="n">valid_time</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">l_corr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xr</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">thishcst</span><span class="p">,</span> <span class="n">thisobs</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="s1">&#39;valid_time&#39;</span><span class="p">))</span>
+        
+    <span class="n">thiscorr</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">l_corr</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="s1">&#39;forecastMonth&#39;</span><span class="p">)</span>
+    <span class="n">thiscorr</span> <span class="o">=</span> <span class="n">thiscorr</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">forecastMonth</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+    <span class="n">thiscorr</span> <span class="o">=</span> <span class="n">thiscorr</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;start_month&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">stmonth</span><span class="p">]},</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">corr</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">corr</span><span class="p">,</span> <span class="n">thiscorr</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>START MONTH = 1
+START MONTH = 2
+START MONTH = 3
+START MONTH = 4
+START MONTH = 5
+START MONTH = 6
+START MONTH = 7
+START MONTH = 8
+START MONTH = 9
+START MONTH = 10
+START MONTH = 11
+START MONTH = 12
+</pre></div>
+</div>
+</div>
+</div>
+<p>Save the result, and inspect it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file_name</span> <span class="o">=</span> <span class="s1">&#39;/</span><span class="si">{}</span><span class="s1">_mm_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_nino_ind_corr.nc&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;sst&#39;</span><span class="p">,</span> <span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">hc_str</span><span class="p">)</span>
+<span class="n">corr</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">data_path</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">corr</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+html[data-theme=dark],
+body[data-theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block !important;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 0 20px 0 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: inline-block;
+  opacity: 0;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:focus + label {
+  border: 2px solid var(--xr-font-color0);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-index-preview {
+  grid-column: 2 / 5;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data,
+.xr-index-data-in:checked ~ .xr-index-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-index-name div,
+.xr-index-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2,
+.xr-no-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.Dataset&gt; Size: 3kB
+Dimensions:        (start_month: 12, region: 4, forecastMonth: 6)
+Coordinates:
+  * start_month    (start_month) int64 96B 1 2 3 4 5 6 7 8 9 10 11 12
+  * region         (region) int64 32B 0 1 2 3
+  * forecastMonth  (forecastMonth) int64 48B 1 2 3 4 5 6
+    surface        float64 8B 0.0
+    abbrevs        (region) &lt;U3 48B &#x27;1+2&#x27; &#x27;3&#x27; &#x27;3.4&#x27; &#x27;4&#x27;
+    names          (region) &lt;U7 112B &#x27;NINO1+2&#x27; &#x27;NINO3&#x27; &#x27;NINO3.4&#x27; &#x27;NINO4&#x27;
+    number         int64 8B 0
+    step           timedelta64[ns] 8B 00:00:00
+Data variables:
+    sst            (start_month, forecastMonth, region) float64 2kB 0.8843 .....</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-0fa37b21-8b71-4cd6-95b9-7c609c488071' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-0fa37b21-8b71-4cd6-95b9-7c609c488071' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>start_month</span>: 12</li><li><span class='xr-has-index'>region</span>: 4</li><li><span class='xr-has-index'>forecastMonth</span>: 6</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-f184cff5-f262-4cca-b638-a7dd131c9468' class='xr-section-summary-in' type='checkbox'  checked><label for='section-f184cff5-f262-4cca-b638-a7dd131c9468' class='xr-section-summary' >Coordinates: <span>(8)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>start_month</span></div><div class='xr-var-dims'>(start_month)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>1 2 3 4 5 6 7 8 9 10 11 12</div><input id='attrs-30e474b1-e31d-4e24-b92b-ba08fe5d5369' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-30e474b1-e31d-4e24-b92b-ba08fe5d5369' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-6feb1220-08a0-4e75-851b-a798fb69aa56' class='xr-var-data-in' type='checkbox'><label for='data-6feb1220-08a0-4e75-851b-a798fb69aa56' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>region</span></div><div class='xr-var-dims'>(region)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3</div><input id='attrs-7f8ba67d-3295-4111-bb4f-a39b798b892b' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-7f8ba67d-3295-4111-bb4f-a39b798b892b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-71aedb8c-a84f-4231-ba00-c3a58b265421' class='xr-var-data-in' type='checkbox'><label for='data-71aedb8c-a84f-4231-ba00-c3a58b265421' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0, 1, 2, 3])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>forecastMonth</span></div><div class='xr-var-dims'>(forecastMonth)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>1 2 3 4 5 6</div><input id='attrs-19134f5f-ec82-4bb5-b10b-15d47145235c' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-19134f5f-ec82-4bb5-b10b-15d47145235c' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-d6b5c420-967a-4cae-9c3a-b3bb251c8287' class='xr-var-data-in' type='checkbox'><label for='data-d6b5c420-967a-4cae-9c3a-b3bb251c8287' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([1, 2, 3, 4, 5, 6])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>surface</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.0</div><input id='attrs-b26848ed-619c-4156-b3a9-64864d9b6214' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-b26848ed-619c-4156-b3a9-64864d9b6214' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-49dda4cd-28df-4152-9feb-e5b7c27eecc8' class='xr-var-data-in' type='checkbox'><label for='data-49dda4cd-28df-4152-9feb-e5b7c27eecc8' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array(0.)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>abbrevs</span></div><div class='xr-var-dims'>(region)</div><div class='xr-var-dtype'>&lt;U3</div><div class='xr-var-preview xr-preview'>&#x27;1+2&#x27; &#x27;3&#x27; &#x27;3.4&#x27; &#x27;4&#x27;</div><input id='attrs-24e2936e-0b27-4407-a1c4-6b555b0143ac' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-24e2936e-0b27-4407-a1c4-6b555b0143ac' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-a31fa880-fc18-46d6-85a8-4b37c334cf84' class='xr-var-data-in' type='checkbox'><label for='data-a31fa880-fc18-46d6-85a8-4b37c334cf84' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;1+2&#x27;, &#x27;3&#x27;, &#x27;3.4&#x27;, &#x27;4&#x27;], dtype=&#x27;&lt;U3&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>names</span></div><div class='xr-var-dims'>(region)</div><div class='xr-var-dtype'>&lt;U7</div><div class='xr-var-preview xr-preview'>&#x27;NINO1+2&#x27; &#x27;NINO3&#x27; &#x27;NINO3.4&#x27; &#x27;NINO4&#x27;</div><input id='attrs-f561b7d2-662f-4eab-a497-0163e427492a' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-f561b7d2-662f-4eab-a497-0163e427492a' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-41ddbe09-e016-4f13-951a-d22f84184ca2' class='xr-var-data-in' type='checkbox'><label for='data-41ddbe09-e016-4f13-951a-d22f84184ca2' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;NINO1+2&#x27;, &#x27;NINO3&#x27;, &#x27;NINO3.4&#x27;, &#x27;NINO4&#x27;], dtype=&#x27;&lt;U7&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>number</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-12c42131-155f-4b01-a018-cbbe8b38b964' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-12c42131-155f-4b01-a018-cbbe8b38b964' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-f2717109-957f-49e6-b9db-1d59e41a583e' class='xr-var-data-in' type='checkbox'><label for='data-f2717109-957f-49e6-b9db-1d59e41a583e' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array(0)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>step</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>timedelta64[ns]</div><div class='xr-var-preview xr-preview'>00:00:00</div><input id='attrs-fedfc2c3-4923-4e42-a65c-04481fda5010' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-fedfc2c3-4923-4e42-a65c-04481fda5010' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-8960cbe1-fbd5-4bbe-af80-7a6cdf20ec24' class='xr-var-data-in' type='checkbox'><label for='data-8960cbe1-fbd5-4bbe-af80-7a6cdf20ec24' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array(0, dtype=&#x27;timedelta64[ns]&#x27;)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-bf0fd8b5-754d-4940-8b05-07c95a8123dd' class='xr-section-summary-in' type='checkbox'  checked><label for='section-bf0fd8b5-754d-4940-8b05-07c95a8123dd' class='xr-section-summary' >Data variables: <span>(1)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>sst</span></div><div class='xr-var-dims'>(start_month, forecastMonth, region)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.8843 0.9749 ... 0.547 0.8424</div><input id='attrs-baf56e52-2fe4-4d71-bd7f-f353512f750a' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-baf56e52-2fe4-4d71-bd7f-f353512f750a' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-e0f9fe00-c1dc-4702-b1c8-9f3f28e2fd3a' class='xr-var-data-in' type='checkbox'><label for='data-e0f9fe00-c1dc-4702-b1c8-9f3f28e2fd3a' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[[0.88428325, 0.97486296, 0.98754286, 0.98760322],
+        [0.60822438, 0.92039486, 0.95650449, 0.96280133],
+        [0.19136528, 0.75826997, 0.91534092, 0.95686024],
+        [0.22341532, 0.53335769, 0.8603799 , 0.91650688],
+        [0.43586997, 0.44712255, 0.69001741, 0.85897938],
+        [0.42898064, 0.48539336, 0.63148798, 0.7681749 ]],
+
+       [[0.82171896, 0.94152061, 0.96517206, 0.97698454],
+        [0.38277638, 0.80579707, 0.92722522, 0.96092377],
+        [0.29266329, 0.63716356, 0.90934797, 0.93186019],
+        [0.43387371, 0.44154574, 0.73777226, 0.9031279 ],
+        [0.44157277, 0.59686254, 0.78593459, 0.86665536],
+        [0.3013047 , 0.52985381, 0.70890726, 0.80963241]],
+
+       [[0.86952867, 0.90835389, 0.9640901 , 0.98631497],
+        [0.61194553, 0.72242112, 0.94430708, 0.97354831],
+        [0.59348479, 0.52977095, 0.76074186, 0.92107745],
+        [0.4810353 , 0.64739365, 0.80564077, 0.86959181],
+        [0.36748945, 0.61026551, 0.77919187, 0.83636535],
+        [0.43502273, 0.6254185 , 0.76445873, 0.76085631]],
+...
+       [[0.95246379, 0.98891461, 0.99319801, 0.97057888],
+        [0.93208014, 0.97824024, 0.98414882, 0.97243545],
+        [0.90395994, 0.96593881, 0.97044046, 0.96185535],
+        [0.81947906, 0.96969538, 0.95983992, 0.92237681],
+        [0.54816711, 0.89253996, 0.93440922, 0.91007183],
+        [0.18854009, 0.74906627, 0.88863746, 0.9052694 ]],
+
+       [[0.94709726, 0.99171239, 0.99365991, 0.98334209],
+        [0.91997758, 0.98570181, 0.98515185, 0.97319554],
+        [0.77776976, 0.96923018, 0.97782602, 0.9466315 ],
+        [0.44821512, 0.89108526, 0.95258034, 0.93355036],
+        [0.10712365, 0.79338086, 0.91479902, 0.91786239],
+        [0.26010704, 0.53916141, 0.85040554, 0.87164005]],
+
+       [[0.9523891 , 0.99577448, 0.99399865, 0.98244374],
+        [0.82479727, 0.98747117, 0.99257037, 0.97964003],
+        [0.50650936, 0.92990577, 0.97110609, 0.96516766],
+        [0.09619206, 0.77348797, 0.92682981, 0.94847549],
+        [0.23877698, 0.51166995, 0.84941693, 0.89640995],
+        [0.35026087, 0.21924205, 0.54699072, 0.84240341]]])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-c4aedbf4-a7ec-4405-a123-e1b9473b9559' class='xr-section-summary-in' type='checkbox'  ><label for='section-c4aedbf4-a7ec-4405-a123-e1b9473b9559' class='xr-section-summary' >Indexes: <span>(3)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-index-name'><div>start_month</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-3a749ac2-16b8-4485-b11d-3336c3652092' class='xr-index-data-in' type='checkbox'/><label for='index-3a749ac2-16b8-4485-b11d-3336c3652092' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], dtype=&#x27;int64&#x27;, name=&#x27;start_month&#x27;))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>region</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-c9676e9d-a08f-4da9-b09d-5ee69e31cdd4' class='xr-index-data-in' type='checkbox'/><label for='index-c9676e9d-a08f-4da9-b09d-5ee69e31cdd4' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([0, 1, 2, 3], dtype=&#x27;int64&#x27;, name=&#x27;region&#x27;))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>forecastMonth</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-ce82a51d-3951-42f9-8d74-cdc951b73f2f' class='xr-index-data-in' type='checkbox'/><label for='index-ce82a51d-3951-42f9-8d74-cdc951b73f2f' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([1, 2, 3, 4, 5, 6], dtype=&#x27;int64&#x27;, name=&#x27;forecastMonth&#x27;))</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-ea868645-9c48-4ad5-86fa-d7756f4c7c71' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-ea868645-9c48-4ad5-86fa-d7756f4c7c71' class='xr-section-summary'  title='Expand/collapse section'>Attributes: <span>(0)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'></dl></div></li></ul></div></div></div></div>
+</div>
+</section>
+<section id="plot-the-correlation-heatmaps">
+<h2>Plot the correlation heatmaps<a class="headerlink" href="#plot-the-correlation-heatmaps" title="Link to this heading">#</a></h2>
+<p>Using the computed correlations, construct correlation heatmaps for each NINO index computed in the previous Notebook.</p>
+<p>Define labels for the valid months or start months, and load the correlations.</p>
+<div class="cell tag_hide-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># month labels for the plots</span>
+<span class="n">mon_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;jan&#39;</span><span class="p">,</span> <span class="s1">&#39;feb&#39;</span><span class="p">,</span> <span class="s1">&#39;mar&#39;</span><span class="p">,</span> <span class="s1">&#39;apr&#39;</span><span class="p">,</span> <span class="s1">&#39;may&#39;</span><span class="p">,</span> <span class="s1">&#39;jun&#39;</span><span class="p">,</span> <span class="s1">&#39;jul&#39;</span><span class="p">,</span> <span class="s1">&#39;aug&#39;</span><span class="p">,</span> <span class="s1">&#39;sep&#39;</span><span class="p">,</span> <span class="s1">&#39;oct&#39;</span><span class="p">,</span> <span class="s1">&#39;nov&#39;</span><span class="p">,</span> <span class="s1">&#39;dec&#39;</span><span class="p">]</span>
+
+<span class="c1"># load the correlations</span>
+<span class="n">file_name</span> <span class="o">=</span> <span class="s1">&#39;/</span><span class="si">{}</span><span class="s1">_mm_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_nino_ind_corr.nc&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;sst&#39;</span><span class="p">,</span> <span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">hc_str</span><span class="p">)</span>
+<span class="n">corr</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataarray</span><span class="p">(</span><span class="n">data_path</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Loop over the regions for which the indices and correlation were computed:</p>
+<ul class="simple">
+<li><p>…</p></li>
+<li><p>…</p></li>
+<li><p>plot correlation as a function of start month and leadtime</p></li>
+<li><p>plot correlation as a function of valid month and leadtime</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make the plot - loop over nino regions</span>
+<span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">corr</span><span class="o">.</span><span class="n">region</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span> <span class="n">corr</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="n">ind</span><span class="p">)</span><span class="o">.</span><span class="n">names</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">ind_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">corr</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="n">ind</span><span class="p">)</span><span class="o">.</span><span class="n">names</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">hm_cm</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;RdYlBu_r&#39;</span><span class="p">)</span>
+    <span class="n">hm_levs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">BoundaryNorm</span><span class="p">(</span><span class="n">hm_levs</span><span class="p">,</span> <span class="n">ncolors</span><span class="o">=</span><span class="n">hm_cm</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="n">clip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># HEATMAP (correlation as a function of start_month and leadtime)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="p">(</span><span class="n">corr</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="n">ind</span><span class="p">)</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span>
+          <span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="s1">&#39;surface&#39;</span><span class="p">,</span> <span class="s1">&#39;abbrevs&#39;</span><span class="p">,</span> <span class="s1">&#39;step&#39;</span><span class="p">,</span> <span class="s1">&#39;names&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">hm_cm</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">hm_levs</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">vmax</span><span class="o">=</span><span class="n">hm_levs</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span>
+                     <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                     <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;.2f&quot;</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+
+    <span class="n">tit_txt1</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> index (temporal correlation with ERA5) &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ind_name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">centre</span> <span class="o">==</span> <span class="s1">&#39;ukmo&#39;</span><span class="p">:</span>
+        <span class="n">tit_txt2</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> (system=</span><span class="si">{}</span><span class="s1">), &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">providers</span><span class="p">[</span><span class="n">prov</span><span class="p">][</span><span class="s1">&#39;plot_name&#39;</span><span class="p">],</span> <span class="n">providers</span><span class="p">[</span><span class="n">prov</span><span class="p">][</span><span class="s1">&#39;plot_system&#39;</span><span class="p">],</span>
+                                                <span class="n">providers</span><span class="p">[</span><span class="n">prov</span><span class="p">][</span><span class="s1">&#39;cds_system&#39;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">prov</span> <span class="o">==</span> <span class="s1">&#39;ecmwf.51&#39;</span><span class="p">:</span>
+        <span class="n">tit_txt2</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> (C3Sv</span><span class="si">{}</span><span class="s1">), &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">providers</span><span class="p">[</span><span class="n">prov</span><span class="p">][</span><span class="s1">&#39;plot_name&#39;</span><span class="p">],</span> <span class="n">providers</span><span class="p">[</span><span class="n">prov</span><span class="p">][</span><span class="s1">&#39;plot_system&#39;</span><span class="p">],</span>
+                                             <span class="n">providers</span><span class="p">[</span><span class="n">prov</span><span class="p">][</span><span class="s1">&#39;cds_system&#39;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">tit_txt2</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> , &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">providers</span><span class="p">[</span><span class="n">prov</span><span class="p">][</span><span class="s1">&#39;plot_name&#39;</span><span class="p">],</span> <span class="n">providers</span><span class="p">[</span><span class="n">prov</span><span class="p">][</span><span class="s1">&#39;plot_system&#39;</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">tit_txt2</span> <span class="o">+</span> <span class="n">tit_txt1</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;start month&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;leadtime&#39;</span><span class="p">)</span>
+    <span class="c1"># Set ticks labels for x-axis</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">mon_labels</span><span class="p">)</span>  
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="c1"># HEATMAP (correlation as a function of valid_month and leadtime)</span>
+    <span class="n">df_vt</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">future_stack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">df_vt</span><span class="p">[</span><span class="s1">&#39;valid_month&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_vt</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;start_month&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;forecastMonth&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
+        <span class="s1">&#39;int32&#39;</span><span class="p">)</span>
+    <span class="n">df_vt</span><span class="p">[</span><span class="s1">&#39;valid_month&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span> <span class="k">if</span> <span class="n">mm</span> <span class="o">&lt;</span> <span class="mi">13</span> <span class="k">else</span> <span class="n">mm</span> <span class="o">-</span> <span class="mi">12</span> <span class="k">for</span> <span class="n">mm</span> <span class="ow">in</span> <span class="n">df_vt</span><span class="p">[</span><span class="s1">&#39;valid_month&#39;</span><span class="p">]]</span>
+    <span class="n">df_vt</span> <span class="o">=</span> <span class="n">df_vt</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;start_month&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span>
+        <span class="p">[</span><span class="s1">&#39;valid_month&#39;</span><span class="p">,</span> <span class="s1">&#39;forecastMonth&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df_vt</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">hm_cm</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">hm_levs</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">vmax</span><span class="o">=</span><span class="n">hm_levs</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span>
+                     <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                     <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;.2f&quot;</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">tit_txt2</span> <span class="o">+</span> <span class="n">tit_txt1</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;valid month&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;leadtime&#39;</span><span class="p">)</span>
+    <span class="c1"># Set ticks labels for x-axis</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">mon_labels</span><span class="p">)</span>  <span class="c1"># , rotation=&#39;vertical&#39;, fontsize=18)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0 NINO1+2
+</pre></div>
+</div>
+<img alt="../_images/7445299a9bbd896ed02278aa3232bcbfdd7dbcfec8f9a532a31d08ab02045923.png" src="../_images/7445299a9bbd896ed02278aa3232bcbfdd7dbcfec8f9a532a31d08ab02045923.png" />
+<img alt="../_images/93a166e05e9c0e085e7a282f29502a5456988797e3d6b21e57837a937208ce7c.png" src="../_images/93a166e05e9c0e085e7a282f29502a5456988797e3d6b21e57837a937208ce7c.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 NINO3
+</pre></div>
+</div>
+<img alt="../_images/e7ac314c58017a6d48d52aa6c76f29774f4af3920c2c5b276334126fc05ba0bc.png" src="../_images/e7ac314c58017a6d48d52aa6c76f29774f4af3920c2c5b276334126fc05ba0bc.png" />
+<img alt="../_images/b15e0dd04ef6e6dbb0bf1598b9dd1b859acc1d82077d89896d21ca53d7b97478.png" src="../_images/b15e0dd04ef6e6dbb0bf1598b9dd1b859acc1d82077d89896d21ca53d7b97478.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2 NINO3.4
+</pre></div>
+</div>
+<img alt="../_images/b38d4da038007646924c96f927cbe0b7b227b0087662a99a764490ff8847f8d3.png" src="../_images/b38d4da038007646924c96f927cbe0b7b227b0087662a99a764490ff8847f8d3.png" />
+<img alt="../_images/7f8d794edd5ee3e23eb538b686f0f658a2e9aafabb8d2dc47d335f197fbcfdcb.png" src="../_images/7f8d794edd5ee3e23eb538b686f0f658a2e9aafabb8d2dc47d335f197fbcfdcb.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3 NINO4
+</pre></div>
+</div>
+<img alt="../_images/a12f6e9863f82b26f090d8a6ba09fcf5700f4071b1fbb9e4c7f68621301c6e5d.png" src="../_images/a12f6e9863f82b26f090d8a6ba09fcf5700f4071b1fbb9e4c7f68621301c6e5d.png" />
+<img alt="../_images/9cfd1b321452dc27455a2c7eb965bb56d87baa55f654ad9972c8edf86c62325f.png" src="../_images/9cfd1b321452dc27455a2c7eb965bb56d87baa55f654ad9972c8edf86c62325f.png" />
+</div>
+</div>
+<p>Extensions to these single-system monthly correlations heatmaps would be to compute indices for multiple systems and then combine them into multi-system combinations. The approach to variance-normalisation in the C3S SST index charts is outlined on the <a class="reference external" href="https://confluence.ecmwf.int/display/CKB/C3S+seasonal+forecast+product+descriptions">products description page</a>, and in the <a class="reference external" href="https://www.ecmwf.int/sites/default/files/elibrary/2021/81237-seas5-user-guide_1.pdf">SEAS5 user guide</a>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./workflows"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-the-pre-computed-era5-indices-and-prepare-to-compute-correlations">Load the pre-computed ERA5 indices and prepare to compute correlations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loop-over-the-hindcast-start-months-and-compute-correlations">Loop over the hindcast start months and compute correlations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-the-correlation-heatmaps">Plot the correlation heatmaps</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By the Copernicus Climate Change Service (C3S), entrusted to ECMWF (European Centre for Medium-Range Weather Forecasts)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

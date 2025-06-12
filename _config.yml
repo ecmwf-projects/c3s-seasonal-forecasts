@@ -17,7 +17,7 @@ execute:
 
 # Information about where the book exists on the web
 repository:
-  url: https://github.com/ecmwf-projects/c3s_eqc_book_main  # Online location of your book
+  url: https://github.com/ecmwf-projects/c3s-seasonal-forecasts  # Online location of your book
   path_to_book:  /c3s_eqc_quality_assesments# Optional path to your book, relative to the repository root
   # branch:  # Which branch of the repository should be used when creating links (optional)
 

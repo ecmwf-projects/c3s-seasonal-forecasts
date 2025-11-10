@@ -11,9 +11,9 @@ parts:
     #title: Quality assessments for Satellite Observations
     # Manually list all notebooks to be rendered here in sections (appears as collapsable)
     sections:
+    - file: workflows/graphical_product_example_tmin.ipynb
     - file: workflows/enso_index_from_cds_data.ipynb
     - file: workflows/enso_index_verification_plot.ipynb
-    - file: workflows/graphical_product_example_tmin.ipynb
     
 - caption: ➡️ Additional Analysis
   chapters:

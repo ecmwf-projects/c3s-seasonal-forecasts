@@ -17,6 +17,7 @@ __MACOSX/
 
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
+**/.ipynb_checkpoints/
 
 # IPython
 profile_default/
@@ -214,3 +215,4 @@ pyrightconfig.json
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/jupyternotebooks,python,visualstudiocode
+.ipynb_checkpoints/

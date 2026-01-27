@@ -66,9 +66,9 @@ def getForecastsystemDetails(strfcsystem):
     
     # Build the result dictionary
     result = {
-        'forecast_system_id': strfcsystem,
-        'origin': origin_part,
-        'system_number': system_num,
+        # 'forecast_system_id': strfcsystem,
+        # 'origin': origin_part,
+        # 'system_number': system_num,
         'origin_details': origins_config[origin_part].copy(),
         'system_details': systems_config[origin_part][system_num].copy()
     }

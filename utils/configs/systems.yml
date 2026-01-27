@@ -1,0 +1,188 @@
+# ECMWF
+ecmwf:
+  4:
+    name: System4
+    in_c3s: '2017090100'
+    gridtype: 1degMARS
+  5:
+    name: SEAS5
+    in_c3s: '20171101'
+    gridtype: 1degMARS
+  51:
+    name: 'SEAS5 (C3Sv5.1)'
+    in_c3s: '20221101'
+    ens_size:
+      products:
+        hc: 25
+
+# Météo-France
+meteo_france:
+  5:
+    name: System5
+    in_c3s: '2017090101'
+  6:
+    name: System6
+    in_c3s: '2018110100'
+  7:
+    name: System7
+    in_c3s: '2019100100'
+  8:
+    name: System8
+    in_c3s: '20210701'
+    ens_size:
+      products:
+        hc: 25
+  9:
+    name: System9
+    in_c3s: '20250501'
+    ens_size:
+      products:
+        hc: 31
+
+# UKMO
+ukmo:
+  12:
+    name: GloSea5-2017
+    in_c3s: '2017090102'
+    isLagged: true
+    ens_size:
+      products:
+        fc: 50
+  13:
+    name: GloSea5-2018
+    in_c3s: '20180501'
+    isLagged: true
+    ens_size:
+      products:
+        fc: 50
+  14:
+    name: GloSea5-GC2-LI-2019
+    in_c3s: '20190501'
+    isLagged: true
+    ens_size:
+      products:
+        fc: 50
+  15:
+    name: GloSea5-GC2-LI-2020
+    in_c3s: '20200501'
+    isLagged: true
+    ens_size:
+      products:
+        fc: 50
+  600:
+    name: 'GloSea6 (system=600)'
+    isLagged: true
+    ens_size:
+      products:
+        fc: 50
+  601:
+    name: 'GloSea6 (system=601)'
+    isLagged: true
+    ens_size:
+      products:
+        fc: 50
+  602:
+    name: 'GloSea6 (system=602)'
+    isLagged: true
+    ens_size:
+      products:
+        fc: 50
+  603:
+    name: 'GloSea6 (system=603)'
+    isLagged: true
+    ens_size:
+      products:
+        fc: 50
+  604:
+    name: 'GloSea6 (system=604)'
+    isLagged: true
+    ens_size:
+      products:
+        fc: 50
+
+# DWD
+dwd:
+  2:
+    name: GCFS2.0
+    in_c3s: '2018110101'
+  21:
+    name: GCFS2.1
+    in_c3s: '20201101'
+  22:
+    name: GCFS2.2
+    in_c3s: '20250401'
+
+# CMCC
+cmcc:
+  3:
+    name: SPSv3
+    in_c3s: '2018110102'
+  35:
+    name: SPSv3.5
+    in_c3s: '2020100100'
+  4:
+    name: SPS4
+    in_c3s: '20250801'
+
+# NCEP
+ncep:
+  2:
+    name: CFSv2
+    in_c3s: '2019100101'
+    isLagged: true
+    ens_size:
+      products:
+        hc: 16
+        fc: 52
+
+# JMA
+jma:
+  2:
+    name: CPS2
+    in_c3s: '2020100101'
+    isLagged: true
+    gridtype: 2p5degMARS
+    ens_size:
+      products:
+        fc: 52
+  3:
+    name: CPS3
+    in_c3s: '20220201'
+    isLagged: true
+    gridtype: 1p25degMARS
+    ens_size:
+      products:
+        fc: 55
+
+# ECCC
+eccc:
+  1:
+    name: GEM-NEMO
+    in_c3s: '2021050100'
+    weight: 0.5
+  2:
+    name: CanCM4i
+    in_c3s: '2021050101'
+    weight: 0.5
+  3:
+    name: GEM5-NEMO
+    in_c3s: '20211201'
+    weight: 0.5
+  4:
+    name: CanESM5.1p1bc
+    in_c3s: '2024070100'
+    weight: 0.5
+  5:
+    name: GEM5.2-NEMO
+    in_c3s: '2024070101'
+    weight: 0.5
+
+# BOM
+bom:
+  2:
+    name: ACCESS-S2
+    in_c3s: '20250501'
+    isLagged: true
+    ens_size:
+      products:
+        fc: 55

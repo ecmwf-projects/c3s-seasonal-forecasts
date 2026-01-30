@@ -2,6 +2,6 @@
 Utility tools for C3S seasonal forecasts workflows.
 """
 
-from . import systems_tools
+from .systems_tools import getForecastsystemDetails
 
-__all__ = ['systems_tools']
+__all__ = ['getForecastsystemDetails']

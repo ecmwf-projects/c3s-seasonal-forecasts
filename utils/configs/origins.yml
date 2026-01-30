@@ -8,7 +8,7 @@ meteo_france:
 
 ukmo:
   MARS_origin: egrr
-  label: MetOffice
+  label: 'Met Office'
 
 dwd:
   MARS_origin: edzh

@@ -71,34 +71,48 @@ ukmo:
         fc: 50
   600:
     name: 'GloSea6 (system=600)'
+    in_c3s: '20210301'
     isLagged: true
     ens_size:
       products:
         fc: 50
   601:
     name: 'GloSea6 (system=601)'
+    in_c3s: '20220301'
     isLagged: true
     ens_size:
       products:
         fc: 50
   602:
     name: 'GloSea6 (system=602)'
+    in_c3s: '20230301'
     isLagged: true
     ens_size:
       products:
         fc: 50
   603:
     name: 'GloSea6 (system=603)'
+    in_c3s: '20240301'
     isLagged: true
     ens_size:
       products:
         fc: 50
   604:
     name: 'GloSea6 (system=604)'
+    in_c3s: '20250301'
     isLagged: true
     ens_size:
       products:
         fc: 50
+
+  605:
+    name: 'GloSea6 (system=605)'
+    in_c3s: '20260301'
+    isLagged: true
+    ens_size:
+      products:
+        fc: 50
+
 
 # DWD
 dwd:

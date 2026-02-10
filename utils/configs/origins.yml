@@ -1,0 +1,35 @@
+ecmwf:
+  MARS_origin: ecmf
+  label: ECMWF
+
+meteo_france:
+  MARS_origin: lfpw
+  label: Météo-France
+
+ukmo:
+  MARS_origin: egrr
+  label: 'Met Office'
+
+dwd:
+  MARS_origin: edzh
+  label: DWD
+
+cmcc:
+  MARS_origin: cmcc
+  label: CMCC
+
+ncep:
+  MARS_origin: kwbc
+  label: NCEP
+
+jma:
+  MARS_origin: rjtd
+  label: JMA
+
+eccc:
+  MARS_origin: cwao
+  label: ECCC
+
+bom:
+  MARS_origin: ammc
+  label: BOM

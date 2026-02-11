@@ -8,8 +8,6 @@ parts:
 - caption: ➡️ Product Workflows
   chapters:
   - file: workflows/prod_workflows.md
-    #title: Quality assessments for Satellite Observations
-    # Manually list all notebooks to be rendered here in sections (appears as collapsable)
     sections:
     - file: workflows/graphical_product_example_tmin.ipynb
     - file: workflows/enso_index_from_cds_data.ipynb
@@ -18,9 +16,5 @@ parts:
 - caption: ➡️ Additional Analysis
   chapters:
   - file: workflows/extra_analysis.md
-    #title: Quality assessments for Insitu Observations
-    # Manually list all notebooks to be rendered here in sections (appears as collapsable)
-    # sections:
-    # - glob: workflows/*.ipynb
 
 

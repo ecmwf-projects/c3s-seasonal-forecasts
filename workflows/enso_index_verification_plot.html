@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'workflows/enso_index_verification_plot';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Extra analysis using C3S seasonal data" href="extra_analysis.html" />
+    <link rel="next" title="Additional analysis using C3S seasonal data" href="extra_analysis.html" />
     <link rel="prev" title="Deriving ENSO indices used in C3S graphical products from CDS data" href="enso_index_from_cds_data.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -193,7 +193,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">➡️ Additional Analysis</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="extra_analysis.html">Extra analysis using C3S seasonal data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra_analysis.html">Additional analysis using C3S seasonal data</a></li>
 </ul>
 
     </div>
@@ -409,6 +409,16 @@ document.write(`
 <h1>Producing the ENSO index verification heatmaps<a class="headerlink" href="#producing-the-enso-index-verification-heatmaps" title="Link to this heading">#</a></h1>
 <p>In this example we use the computed El Niño–Southern Oscillation (ENSO) indices from <a class="reference internal" href="enso_index_from_cds_data.html"><span class="std std-doc">the previous Notebook</span></a> to produce heatmaps of temporal correlations, as included on the C3S seasonal real-time forecast <a class="reference external" href="https://confluence.ecmwf.int/display/CKB/C3S+seasonal+forecasts+verification+plots">verification page</a>.</p>
 <p>Some information on ENSO impacts in Europe can be found on <a class="reference external" href="https://confluence.ecmwf.int/display/COPSRV/ENSO+impacts+on+Europe">a page in the C3S documentation</a>.</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#configuration"><span class="xref myst">Configuration</span></a></p></li>
+<li><p><a class="reference internal" href="#load-the-pre-computed-era5-indices-and-prepare-to-compute-correlations"><span class="xref myst">Load the pre-computed ERA5 indices and prepare to compute correlations</span></a></p></li>
+<li><p><a class="reference internal" href="#loop-over-the-hindcast-start-months-and-compute-correlations"><span class="xref myst">Loop over the hindcast start months and compute correlations</span></a></p></li>
+<li><p><a class="reference internal" href="#plot-the-correlation-heatmaps"><span class="xref myst">Plot the correlation heatmaps</span></a></p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some of the python code uses a set of <a class="reference external" href="https://github.com/ecmwf-projects/c3s-seasonal-forecasts/tree/main/utils">utility functions</a> available in the GitHub respository which hosts these Notebooks.</p>
+</div>
 <section id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h2>
 <p>Import required modules, define the library of C3S systems, and define some parameters related to the indices previously computed.</p>
@@ -423,37 +433,38 @@ document.write(`
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">BoundaryNorm</span>
 <span class="kn">from</span> <span class="nn">dateutil</span> <span class="kn">import</span> <span class="n">relativedelta</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
-<span class="c1"># library of C3S systems and useful parameters</span>
-<span class="c1"># these are the latest system versions, as of January 2026</span>
-<span class="c1"># max_hc and max_fc represent the number of members to be considered (the number index starts from 0, most recent first)</span>
-<span class="n">providers</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;ecmwf.s51&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;ECMWF&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;SEAS5&#39;</span><span class="p">,</span> <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
-    <span class="s1">&#39;meteo_france.s9&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Météo-France&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;System 9&#39;</span><span class="p">,</span> <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
-    <span class="s1">&#39;ukmo.s604&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Met Office&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;GloSea6&#39;</span><span class="p">,</span> <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;max_hc&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;max_fc&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">},</span>
-    <span class="s1">&#39;dwd.s22&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;DWD&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;GCFS2.2&#39;</span><span class="p">,</span> <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
-    <span class="s1">&#39;cmcc.s4&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;CMCC&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;SPS4&#39;</span><span class="p">,</span> <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
-    <span class="s1">&#39;ncep.s2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;NCEP&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;CFSv2&#39;</span><span class="p">,</span> <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;max_hc&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;max_fc&#39;</span><span class="p">:</span> <span class="mi">52</span><span class="p">},</span>
-    <span class="s1">&#39;jma.s3&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;JMA&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;CPS3&#39;</span><span class="p">,</span> <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;max_hc&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="s1">&#39;max_fc&#39;</span><span class="p">:</span> <span class="mi">55</span><span class="p">},</span>
-    <span class="s1">&#39;eccc.s4&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;ECCC&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;CanESM5.1p1bc&#39;</span><span class="p">,</span> <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
-    <span class="s1">&#39;eccc.s5&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;ECCC&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;GEM5.2-NEMO&#39;</span><span class="p">,</span> <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
-    <span class="s1">&#39;bom.s2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;plot_name&#39;</span><span class="p">:</span> <span class="s1">&#39;BOM&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_system&#39;</span><span class="p">:</span> <span class="s1">&#39;ACCESS-S2&#39;</span><span class="p">,</span> <span class="s1">&#39;lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
-<span class="p">}</span>
+<span class="c1"># Add parent directory to path so we can import the utils package</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="p">))</span>
+<span class="kn">from</span> <span class="nn">utils.tools</span> <span class="kn">import</span> <span class="n">getForecastsystemDetails</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># select a system and version</span>
-<span class="n">prov</span> <span class="o">=</span> <span class="s1">&#39;ukmo.s604&#39;</span>
-<span class="c1"># split the string at &#39;.s&#39;</span>
-<span class="n">centre</span><span class="p">,</span> <span class="n">version</span> <span class="o">=</span> <span class="n">prov</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.s&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the data path where the indices were saved</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="s1">&#39;data&#39;</span>
+
 <span class="c1"># define the common hindcast period</span>
 <span class="n">hc_period</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1993&#39;</span><span class="p">,</span> <span class="s1">&#39;2016&#39;</span><span class="p">]</span>
 <span class="n">hc_str</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">hc_period</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">hc_period</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
-<span class="c1"># the data path where the indices were saved</span>
-<span class="n">data_path</span> <span class="o">=</span> <span class="s1">&#39;data&#39;</span>
+
+<span class="c1"># select a forecast system</span>
+<span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;ukmo&#39;</span>  <span class="c1"># originating centre label for the CDS request</span>
+<span class="n">system</span> <span class="o">=</span> <span class="s1">&#39;604&#39;</span>  <span class="c1"># forecast system identifier for the CDS request</span>
+<span class="n">prov</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">origin</span><span class="si">}</span><span class="s1">.s</span><span class="si">{</span><span class="n">system</span><span class="si">}</span><span class="s1">&#39;</span>
+
+<span class="c1"># Get system details from configuration files in utils directory using format ukmo.s604</span>
+<span class="n">system_details</span> <span class="o">=</span> <span class="n">getForecastsystemDetails</span><span class="p">(</span><span class="n">prov</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">system_details</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;origin_details&#39;: {&#39;MARS_origin&#39;: &#39;egrr&#39;, &#39;label&#39;: &#39;Met Office&#39;}, &#39;system_details&#39;: {&#39;name&#39;: &#39;GloSea6 (system=604)&#39;, &#39;isLagged&#39;: True, &#39;ens_size&#39;: {&#39;products&#39;: {&#39;fc&#39;: 50}}}}
 </pre></div>
 </div>
 </div>
@@ -481,7 +492,7 @@ document.write(`
 <li><p>deal with the missing Jan 1993 start if the centre is <code class="docutils literal notranslate"><span class="pre">ukmo</span></code></p></li>
 <li><p>create a copy of the ERA5 array (to rearrange to match the valid times of the start month in question)</p></li>
 <li><p>read in the hindcast index for the given start, and refactor to include valid time</p></li>
-<li><p>sub-select <a class="reference external" href="https://confluence.ecmwf.int/display/CKB/Summary+of+available+data#:~:text=per%20forecast%20system-,Nominal%20Start%20Dates,-For%20systems%20with">qualifying ensemble members</a>, if needed (for lagged start systems where not all dates are used in the graphical products)</p></li>
+<li><p>sub-select <a class="reference external" href="https://confluence.ecmwf.int/display/CKB/Summary+of+available+data#:~:text=per%20forecast%20system-,Nominal%20Start%20Dates,-For%20systems%20with">qualifying ensemble members</a>, if needed (for forecast systems where not all available ensemble members are used in the graphical products)</p></li>
 <li><p>refactor the ERA5 array to align with the hindcast leadtimes</p></li>
 <li><p>for each leadmonth compute the temporal correlation</p></li>
 <li><p>combine the leadmonth correlations and append to the array of correlations by start month</p></li>
@@ -490,11 +501,11 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">stmonth</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;START MONTH = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stmonth</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;START MONTH = </span><span class="si">{</span><span class="n">stmonth</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="c1"># Note that if the chosen system does not yet have all starts then this needs to be dealt with here</span>
     <span class="c1"># This also includes January 1993 for UKMO meaning the ERA5 data needs to be adjusted to match this</span>
     <span class="c1"># Met Office systems missing data - start month</span>
-    <span class="k">if</span> <span class="n">centre</span> <span class="o">==</span> <span class="s1">&#39;ukmo&#39;</span> <span class="ow">and</span> <span class="n">stmonth</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">origin</span> <span class="o">==</span> <span class="s1">&#39;ukmo&#39;</span> <span class="ow">and</span> <span class="n">stmonth</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="c1"># edit config to deal with Jan 1993 data gap in Met Office data</span>
         <span class="n">hc_period</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1994&#39;</span>
         <span class="n">o</span> <span class="o">=</span> <span class="n">era5_ind</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="n">hc_period</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">hc_period</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -502,7 +513,7 @@ document.write(`
         <span class="n">o</span> <span class="o">=</span> <span class="n">era5_ind</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
     <span class="c1"># read hindcast data array for current start</span>
-    <span class="n">hc_file_name</span> <span class="o">=</span> <span class="s1">&#39;/</span><span class="si">{}</span><span class="s1">_mm_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_st_</span><span class="si">{}</span><span class="s1">_nino_ind.nc&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;sst&#39;</span><span class="p">,</span> <span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">hc_str</span><span class="p">,</span> <span class="n">stmonth</span><span class="p">)</span>
+    <span class="n">hc_file_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/sst_mm_</span><span class="si">{</span><span class="n">origin</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">system</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">hc_str</span><span class="si">}</span><span class="s1">_st_</span><span class="si">{</span><span class="n">stmonth</span><span class="si">}</span><span class="s1">_nino_ind.nc&#39;</span>
     <span class="n">hcst</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataarray</span><span class="p">(</span><span class="n">data_path</span> <span class="o">+</span> <span class="n">hc_file_name</span><span class="p">)</span>
 
     <span class="c1">#hcst = hcst.reset_coords(names=&quot;valid_time&quot;, drop=True)</span>
@@ -512,9 +523,12 @@ document.write(`
                <span class="n">std</span>
                <span class="ow">in</span> <span class="n">vt</span><span class="o">.</span><span class="n">start_date</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
     <span class="n">hcst</span> <span class="o">=</span> <span class="n">hcst</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">valid_time</span><span class="o">=</span><span class="n">vt</span><span class="p">)</span>
+
     <span class="c1"># select qualifying ensemble members</span>
-    <span class="k">if</span> <span class="n">prov</span> <span class="o">==</span> <span class="s1">&#39;ncep.s2&#39;</span><span class="p">:</span>  <span class="c1"># Only case where member sub-selection is needed from the CDS data</span>
-        <span class="n">hcst</span> <span class="o">=</span> <span class="n">hcst</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">19</span><span class="p">))</span>
+    <span class="c1"># Check if ensemble size in data exceeds the configured size</span>
+    <span class="n">ens_size_hc</span> <span class="o">=</span> <span class="n">system_details</span><span class="p">[</span><span class="s1">&#39;system_details&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ens_size&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;products&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hc&#39;</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ens_size_hc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">hcst</span><span class="o">.</span><span class="n">number</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">ens_size_hc</span><span class="p">:</span>
+        <span class="n">hcst</span> <span class="o">=</span> <span class="n">hcst</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">ens_size_hc</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
 
     <span class="c1"># refactor reanalysis to align with hindcast leadtimes</span>
     <span class="n">o</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="s1">&#39;start_date&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">swap_dims</span><span class="p">({</span><span class="s1">&#39;start_date&#39;</span><span class="p">:</span> <span class="s1">&#39;valid_time&#39;</span><span class="p">})</span>
@@ -535,23 +549,7 @@ document.write(`
     <span class="n">thiscorr</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">l_corr</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="s1">&#39;forecastMonth&#39;</span><span class="p">)</span>
     <span class="n">thiscorr</span> <span class="o">=</span> <span class="n">thiscorr</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">forecastMonth</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
     <span class="n">thiscorr</span> <span class="o">=</span> <span class="n">thiscorr</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;start_month&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">stmonth</span><span class="p">]},</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">corr</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">corr</span><span class="p">,</span> <span class="n">thiscorr</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>START MONTH = 1
-START MONTH = 2
-START MONTH = 3
-START MONTH = 4
-START MONTH = 5
-START MONTH = 6
-START MONTH = 7
-START MONTH = 8
-START MONTH = 9
-START MONTH = 10
-START MONTH = 11
-START MONTH = 12
+    <span class="n">corr</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">corr</span><span class="p">,</span> <span class="n">thiscorr</span><span class="p">],</span> <span class="n">compat</span><span class="o">=</span><span class="s1">&#39;no_conflicts&#39;</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -559,7 +557,7 @@ START MONTH = 12
 <p>Save the result, and inspect it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file_name</span> <span class="o">=</span> <span class="s1">&#39;/</span><span class="si">{}</span><span class="s1">_mm_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_nino_ind_corr.nc&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;sst&#39;</span><span class="p">,</span> <span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">hc_str</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/sst_mm_</span><span class="si">{</span><span class="n">origin</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">system</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">hc_str</span><span class="si">}</span><span class="s1">_nino_ind_corr.nc&#39;</span>
 <span class="n">corr</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">data_path</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
 <span class="n">corr</span>
 </pre></div>
@@ -581,39 +579,86 @@ START MONTH = 12
 </symbol>
 </defs>
 </svg>
-<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
- *
- */
+<style>/* CSS stylesheet for displaying xarray objects in notebooks */
 
 :root {
-  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
-  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
-  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
-  --xr-border-color: var(--jp-border-color2, #e0e0e0);
-  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
-  --xr-background-color: var(--jp-layout-color0, white);
-  --xr-background-color-row-even: var(--jp-layout-color1, white);
-  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+  --xr-font-color0: var(
+    --jp-content-font-color0,
+    var(--pst-color-text-base rgba(0, 0, 0, 1))
+  );
+  --xr-font-color2: var(
+    --jp-content-font-color2,
+    var(--pst-color-text-base, rgba(0, 0, 0, 0.54))
+  );
+  --xr-font-color3: var(
+    --jp-content-font-color3,
+    var(--pst-color-text-base, rgba(0, 0, 0, 0.38))
+  );
+  --xr-border-color: var(
+    --jp-border-color2,
+    hsl(from var(--pst-color-on-background, white) h s calc(l - 10))
+  );
+  --xr-disabled-color: var(
+    --jp-layout-color3,
+    hsl(from var(--pst-color-on-background, white) h s calc(l - 40))
+  );
+  --xr-background-color: var(
+    --jp-layout-color0,
+    var(--pst-color-on-background, white)
+  );
+  --xr-background-color-row-even: var(
+    --jp-layout-color1,
+    hsl(from var(--pst-color-on-background, white) h s calc(l - 5))
+  );
+  --xr-background-color-row-odd: var(
+    --jp-layout-color2,
+    hsl(from var(--pst-color-on-background, white) h s calc(l - 15))
+  );
 }
 
 html[theme="dark"],
 html[data-theme="dark"],
 body[data-theme="dark"],
 body.vscode-dark {
-  --xr-font-color0: rgba(255, 255, 255, 1);
-  --xr-font-color2: rgba(255, 255, 255, 0.54);
-  --xr-font-color3: rgba(255, 255, 255, 0.38);
-  --xr-border-color: #1f1f1f;
-  --xr-disabled-color: #515151;
-  --xr-background-color: #111111;
-  --xr-background-color-row-even: #111111;
-  --xr-background-color-row-odd: #313131;
+  --xr-font-color0: var(
+    --jp-content-font-color0,
+    var(--pst-color-text-base, rgba(255, 255, 255, 1))
+  );
+  --xr-font-color2: var(
+    --jp-content-font-color2,
+    var(--pst-color-text-base, rgba(255, 255, 255, 0.54))
+  );
+  --xr-font-color3: var(
+    --jp-content-font-color3,
+    var(--pst-color-text-base, rgba(255, 255, 255, 0.38))
+  );
+  --xr-border-color: var(
+    --jp-border-color2,
+    hsl(from var(--pst-color-on-background, #111111) h s calc(l + 10))
+  );
+  --xr-disabled-color: var(
+    --jp-layout-color3,
+    hsl(from var(--pst-color-on-background, #111111) h s calc(l + 40))
+  );
+  --xr-background-color: var(
+    --jp-layout-color0,
+    var(--pst-color-on-background, #111111)
+  );
+  --xr-background-color-row-even: var(
+    --jp-layout-color1,
+    hsl(from var(--pst-color-on-background, #111111) h s calc(l + 5))
+  );
+  --xr-background-color-row-odd: var(
+    --jp-layout-color2,
+    hsl(from var(--pst-color-on-background, #111111) h s calc(l + 15))
+  );
 }
 
 .xr-wrap {
   display: block !important;
   min-width: 300px;
   max-width: 700px;
+  line-height: 1.6;
 }
 
 .xr-text-repr-fallback {
@@ -636,11 +681,18 @@ body.vscode-dark {
 }
 
 .xr-obj-type,
-.xr-array-name {
+.xr-obj-name,
+.xr-group-name {
   margin-left: 2px;
   margin-right: 10px;
 }
 
+.xr-group-name::before {
+  content: "📁";
+  padding-right: 0.3em;
+}
+
+.xr-group-name,
 .xr-obj-type {
   color: var(--xr-font-color2);
 }
@@ -649,6 +701,8 @@ body.vscode-dark {
   padding-left: 0 !important;
   display: grid;
   grid-template-columns: 150px auto auto 1fr 0 20px 0 20px;
+  margin-block-start: 0;
+  margin-block-end: 0;
 }
 
 .xr-section-item {
@@ -659,10 +713,12 @@ body.vscode-dark {
   display: inline-block;
   opacity: 0;
   height: 0;
+  margin: 0;
 }
 
 .xr-section-item input + label {
   color: var(--xr-disabled-color);
+  border: 2px solid transparent !important;
 }
 
 .xr-section-item input:enabled + label {
@@ -671,7 +727,7 @@ body.vscode-dark {
 }
 
 .xr-section-item input:focus + label {
-  border: 2px solid var(--xr-font-color0);
+  border: 2px solid var(--xr-font-color0) !important;
 }
 
 .xr-section-item input:enabled + label:hover {
@@ -716,7 +772,6 @@ body.vscode-dark {
 .xr-section-summary,
 .xr-section-inline-details {
   padding-top: 4px;
-  padding-bottom: 4px;
 }
 
 .xr-section-inline-details {
@@ -726,11 +781,38 @@ body.vscode-dark {
 .xr-section-details {
   display: none;
   grid-column: 1 / -1;
+  margin-top: 4px;
   margin-bottom: 5px;
 }
 
 .xr-section-summary-in:checked ~ .xr-section-details {
   display: contents;
+}
+
+.xr-group-box {
+  display: inline-grid;
+  grid-template-columns: 0px 20px auto;
+  width: 100%;
+}
+
+.xr-group-box-vline {
+  grid-column-start: 1;
+  border-right: 0.2em solid;
+  border-color: var(--xr-border-color);
+  width: 0px;
+}
+
+.xr-group-box-hline {
+  grid-column-start: 2;
+  grid-row-start: 1;
+  height: 1em;
+  width: 20px;
+  border-bottom: 0.2em solid;
+  border-color: var(--xr-border-color);
+}
+
+.xr-group-box-contents {
+  grid-column-start: 3;
 }
 
 .xr-array-wrap {
@@ -803,7 +885,9 @@ body.vscode-dark {
 .xr-var-item label,
 .xr-var-item > .xr-var-name span {
   background-color: var(--xr-background-color-row-even);
+  border-color: var(--xr-background-color-row-odd);
   margin-bottom: 0;
+  padding-top: 2px;
 }
 
 .xr-var-item > .xr-var-name:hover span {
@@ -814,6 +898,7 @@ body.vscode-dark {
 .xr-var-list > li:nth-child(odd) > label,
 .xr-var-list > li:nth-child(odd) > .xr-var-name span {
   background-color: var(--xr-background-color-row-odd);
+  border-color: var(--xr-background-color-row-even);
 }
 
 .xr-var-name {
@@ -863,8 +948,15 @@ body.vscode-dark {
 .xr-var-data,
 .xr-index-data {
   display: none;
-  background-color: var(--xr-background-color) !important;
-  padding-bottom: 5px !important;
+  border-top: 2px dotted var(--xr-background-color);
+  padding-bottom: 20px !important;
+  padding-top: 10px !important;
+}
+
+.xr-var-attrs-in + label,
+.xr-var-data-in + label,
+.xr-index-data-in + label {
+  padding: 0 1px;
 }
 
 .xr-var-attrs-in:checked ~ .xr-var-attrs,
@@ -875,6 +967,12 @@ body.vscode-dark {
 
 .xr-var-data > table {
   float: right;
+}
+
+.xr-var-data > pre,
+.xr-index-data > pre,
+.xr-var-data > table > tbody > tr {
+  background-color: transparent !important;
 }
 
 .xr-var-name span,
@@ -936,6 +1034,14 @@ dl.xr-attrs {
   stroke: currentColor;
   fill: currentColor;
 }
+
+.xr-var-attrs-in:checked + label > .xr-icon-file-text2,
+.xr-var-data-in:checked + label > .xr-icon-database,
+.xr-index-data-in:checked + label > .xr-icon-database {
+  color: var(--xr-font-color0);
+  filter: drop-shadow(1px 1px 5px var(--xr-font-color2));
+  stroke-width: 0.8px;
+}
 </style><pre class='xr-text-repr-fallback'>&lt;xarray.Dataset&gt; Size: 3kB
 Dimensions:        (start_month: 12, region: 4, forecastMonth: 6)
 Coordinates:
@@ -948,7 +1054,7 @@ Coordinates:
     number         int64 8B 0
     step           timedelta64[ns] 8B 00:00:00
 Data variables:
-    sst            (start_month, forecastMonth, region) float64 2kB 0.9424 .....</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-08a061b0-9607-4cf3-8ab0-d70907d4b78d' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-08a061b0-9607-4cf3-8ab0-d70907d4b78d' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>start_month</span>: 12</li><li><span class='xr-has-index'>region</span>: 4</li><li><span class='xr-has-index'>forecastMonth</span>: 6</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-d217961b-781d-4bbd-a761-aa56c3a06d51' class='xr-section-summary-in' type='checkbox'  checked><label for='section-d217961b-781d-4bbd-a761-aa56c3a06d51' class='xr-section-summary' >Coordinates: <span>(8)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>start_month</span></div><div class='xr-var-dims'>(start_month)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>1 2 3 4 5 6 7 8 9 10 11 12</div><input id='attrs-cbb2275d-cfd7-4b8b-bb5e-c77197cd6906' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-cbb2275d-cfd7-4b8b-bb5e-c77197cd6906' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-acbaa2fe-ed18-46c9-b8b9-6490f2c8a6cd' class='xr-var-data-in' type='checkbox'><label for='data-acbaa2fe-ed18-46c9-b8b9-6490f2c8a6cd' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>region</span></div><div class='xr-var-dims'>(region)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3</div><input id='attrs-9ceebfd2-f8fe-4f98-93f6-46bcfcf29cda' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-9ceebfd2-f8fe-4f98-93f6-46bcfcf29cda' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-57caf9a1-38e8-4edc-bdb7-02e4af6c4b9a' class='xr-var-data-in' type='checkbox'><label for='data-57caf9a1-38e8-4edc-bdb7-02e4af6c4b9a' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0, 1, 2, 3])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>forecastMonth</span></div><div class='xr-var-dims'>(forecastMonth)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>1 2 3 4 5 6</div><input id='attrs-e1f19a1a-8300-4d63-b902-14f23d9f4a2e' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-e1f19a1a-8300-4d63-b902-14f23d9f4a2e' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-b4b50f1e-59a7-4581-96c9-296fb9e7615f' class='xr-var-data-in' type='checkbox'><label for='data-b4b50f1e-59a7-4581-96c9-296fb9e7615f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([1, 2, 3, 4, 5, 6])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>surface</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.0</div><input id='attrs-f16b3e60-100b-454d-ab23-7d7e90c63e80' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-f16b3e60-100b-454d-ab23-7d7e90c63e80' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-3026694f-368a-417b-b3b9-f62f4cbc15a7' class='xr-var-data-in' type='checkbox'><label for='data-3026694f-368a-417b-b3b9-f62f4cbc15a7' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array(0.)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>abbrevs</span></div><div class='xr-var-dims'>(region)</div><div class='xr-var-dtype'>&lt;U3</div><div class='xr-var-preview xr-preview'>&#x27;1+2&#x27; &#x27;3&#x27; &#x27;3.4&#x27; &#x27;4&#x27;</div><input id='attrs-b64387a2-2e45-4120-a7a2-981ffb33888e' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-b64387a2-2e45-4120-a7a2-981ffb33888e' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-6b4c6c7d-d6d3-409f-b9cf-05a2ac9b2379' class='xr-var-data-in' type='checkbox'><label for='data-6b4c6c7d-d6d3-409f-b9cf-05a2ac9b2379' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;1+2&#x27;, &#x27;3&#x27;, &#x27;3.4&#x27;, &#x27;4&#x27;], dtype=&#x27;&lt;U3&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>names</span></div><div class='xr-var-dims'>(region)</div><div class='xr-var-dtype'>&lt;U7</div><div class='xr-var-preview xr-preview'>&#x27;NINO1+2&#x27; &#x27;NINO3&#x27; &#x27;NINO3.4&#x27; &#x27;NINO4&#x27;</div><input id='attrs-cbc50335-2fba-4093-a4ba-e420f36df2e2' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-cbc50335-2fba-4093-a4ba-e420f36df2e2' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-38ab440c-d639-4bb5-866c-5b9fa2d19f5f' class='xr-var-data-in' type='checkbox'><label for='data-38ab440c-d639-4bb5-866c-5b9fa2d19f5f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;NINO1+2&#x27;, &#x27;NINO3&#x27;, &#x27;NINO3.4&#x27;, &#x27;NINO4&#x27;], dtype=&#x27;&lt;U7&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>number</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-a486f51a-e484-47e6-84d5-b8daa198a458' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-a486f51a-e484-47e6-84d5-b8daa198a458' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-fc033b14-bf0e-4e1f-9190-091344b73804' class='xr-var-data-in' type='checkbox'><label for='data-fc033b14-bf0e-4e1f-9190-091344b73804' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array(0)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>step</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>timedelta64[ns]</div><div class='xr-var-preview xr-preview'>00:00:00</div><input id='attrs-4de2c824-c33f-483a-8d71-42ed2f550c84' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-4de2c824-c33f-483a-8d71-42ed2f550c84' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-982e15b5-58a0-45cb-8a3c-8ab394765877' class='xr-var-data-in' type='checkbox'><label for='data-982e15b5-58a0-45cb-8a3c-8ab394765877' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>dtype :</span></dt><dd>timedelta64[ns]</dd></dl></div><div class='xr-var-data'><pre>array(0, dtype=&#x27;timedelta64[ns]&#x27;)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-ca71b14f-d087-48ab-b4aa-ab61b52a6bd9' class='xr-section-summary-in' type='checkbox'  checked><label for='section-ca71b14f-d087-48ab-b4aa-ab61b52a6bd9' class='xr-section-summary' >Data variables: <span>(1)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>sst</span></div><div class='xr-var-dims'>(start_month, forecastMonth, region)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.9424 0.9897 ... 0.6788 0.8228</div><input id='attrs-c85ec622-138a-4321-8717-b3193f8e7bee' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-c85ec622-138a-4321-8717-b3193f8e7bee' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-6b16e96f-0692-400f-b9c5-3e126b662ee0' class='xr-var-data-in' type='checkbox'><label for='data-6b16e96f-0692-400f-b9c5-3e126b662ee0' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[[0.94240909, 0.98972404, 0.99513449, 0.98433147],
+    sst            (start_month, forecastMonth, region) float64 2kB 0.9424 .....</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-8eeae0f7-fe52-45f7-9e9c-dd3826753eb2' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-8eeae0f7-fe52-45f7-9e9c-dd3826753eb2' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>start_month</span>: 12</li><li><span class='xr-has-index'>region</span>: 4</li><li><span class='xr-has-index'>forecastMonth</span>: 6</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-88a39a9b-a65a-47ab-a1af-fc286127b2b3' class='xr-section-summary-in' type='checkbox'  checked><label for='section-88a39a9b-a65a-47ab-a1af-fc286127b2b3' class='xr-section-summary' >Coordinates: <span>(8)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>start_month</span></div><div class='xr-var-dims'>(start_month)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>1 2 3 4 5 6 7 8 9 10 11 12</div><input id='attrs-6e50b727-21f9-4426-9b88-b562e04f6bc0' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-6e50b727-21f9-4426-9b88-b562e04f6bc0' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-d8ab82a3-12d4-447d-a82f-56f2219df8b6' class='xr-var-data-in' type='checkbox'><label for='data-d8ab82a3-12d4-447d-a82f-56f2219df8b6' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>region</span></div><div class='xr-var-dims'>(region)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3</div><input id='attrs-ff2d3fb6-6d33-4e15-a9c3-7e9baf7e323e' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-ff2d3fb6-6d33-4e15-a9c3-7e9baf7e323e' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-2b4cb43c-a559-4600-b21c-68ce40a74d7f' class='xr-var-data-in' type='checkbox'><label for='data-2b4cb43c-a559-4600-b21c-68ce40a74d7f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0, 1, 2, 3])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>forecastMonth</span></div><div class='xr-var-dims'>(forecastMonth)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>1 2 3 4 5 6</div><input id='attrs-e64eb9cd-0e3f-46bc-9dc9-9029e86a1075' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-e64eb9cd-0e3f-46bc-9dc9-9029e86a1075' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-146456b0-8ce1-4f8b-982d-889f0ff9de64' class='xr-var-data-in' type='checkbox'><label for='data-146456b0-8ce1-4f8b-982d-889f0ff9de64' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([1, 2, 3, 4, 5, 6])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>surface</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.0</div><input id='attrs-88ec1c0e-ebd8-455f-a5a4-165040d49933' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-88ec1c0e-ebd8-455f-a5a4-165040d49933' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-eed81062-c91f-4fbf-970c-47cfa8d381b6' class='xr-var-data-in' type='checkbox'><label for='data-eed81062-c91f-4fbf-970c-47cfa8d381b6' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array(0.)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>abbrevs</span></div><div class='xr-var-dims'>(region)</div><div class='xr-var-dtype'>&lt;U3</div><div class='xr-var-preview xr-preview'>&#x27;1+2&#x27; &#x27;3&#x27; &#x27;3.4&#x27; &#x27;4&#x27;</div><input id='attrs-3cee1b92-8365-4881-ab01-2b5ecc1c96c9' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-3cee1b92-8365-4881-ab01-2b5ecc1c96c9' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-d74ad377-6a81-42ec-9a8e-9987e9f84379' class='xr-var-data-in' type='checkbox'><label for='data-d74ad377-6a81-42ec-9a8e-9987e9f84379' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;1+2&#x27;, &#x27;3&#x27;, &#x27;3.4&#x27;, &#x27;4&#x27;], dtype=&#x27;&lt;U3&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>names</span></div><div class='xr-var-dims'>(region)</div><div class='xr-var-dtype'>&lt;U7</div><div class='xr-var-preview xr-preview'>&#x27;NINO1+2&#x27; &#x27;NINO3&#x27; &#x27;NINO3.4&#x27; &#x27;NINO4&#x27;</div><input id='attrs-ca8acb56-c76d-4771-94ed-418076a7c9ad' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-ca8acb56-c76d-4771-94ed-418076a7c9ad' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-3a32ee04-2baa-44e6-b3d3-de741e7b2169' class='xr-var-data-in' type='checkbox'><label for='data-3a32ee04-2baa-44e6-b3d3-de741e7b2169' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;NINO1+2&#x27;, &#x27;NINO3&#x27;, &#x27;NINO3.4&#x27;, &#x27;NINO4&#x27;], dtype=&#x27;&lt;U7&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>number</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-d5407043-2854-4954-a8dd-ade88136b7f4' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-d5407043-2854-4954-a8dd-ade88136b7f4' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-9d3af1b9-2c60-4f57-9aef-39e9a1593783' class='xr-var-data-in' type='checkbox'><label for='data-9d3af1b9-2c60-4f57-9aef-39e9a1593783' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array(0)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>step</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>timedelta64[ns]</div><div class='xr-var-preview xr-preview'>00:00:00</div><input id='attrs-a8dfa6ba-6f84-4e52-a606-cf4ddafa155a' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-a8dfa6ba-6f84-4e52-a606-cf4ddafa155a' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-080b39f8-06a2-43ca-a155-a2e77f34d5f5' class='xr-var-data-in' type='checkbox'><label for='data-080b39f8-06a2-43ca-a155-a2e77f34d5f5' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array(0, dtype=&#x27;timedelta64[ns]&#x27;)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-76aa0b1e-8c0e-4db9-afd1-0387866d034a' class='xr-section-summary-in' type='checkbox'  checked><label for='section-76aa0b1e-8c0e-4db9-afd1-0387866d034a' class='xr-section-summary' >Data variables: <span>(1)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>sst</span></div><div class='xr-var-dims'>(start_month, forecastMonth, region)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.9424 0.9897 ... 0.6788 0.8228</div><input id='attrs-72ab257f-d9c6-44ed-944c-9283c23920a8' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-72ab257f-d9c6-44ed-944c-9283c23920a8' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-6a147635-8926-465a-8adc-64924d5f5088' class='xr-var-data-in' type='checkbox'><label for='data-6a147635-8926-465a-8adc-64924d5f5088' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[[0.94240909, 0.98972404, 0.99513449, 0.98433147],
         [0.65706559, 0.94456101, 0.97790239, 0.96814965],
         [0.3502185 , 0.76739183, 0.93429987, 0.95757185],
         [0.41117435, 0.6784339 , 0.94070999, 0.91308116],
@@ -988,20 +1094,22 @@ Data variables:
         [0.50778328, 0.91225588, 0.96005467, 0.95275177],
         [0.32848753, 0.80908871, 0.93519551, 0.92937432],
         [0.42555509, 0.68735956, 0.92444252, 0.89963223],
-        [0.57616062, 0.513548  , 0.67879785, 0.82275277]]])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-a6cb3c41-80f4-4298-8925-ba60e71bbc40' class='xr-section-summary-in' type='checkbox'  ><label for='section-a6cb3c41-80f4-4298-8925-ba60e71bbc40' class='xr-section-summary' >Indexes: <span>(3)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-index-name'><div>start_month</div></div><div class='xr-index-preview'>PandasIndex</div><input type='checkbox' disabled/><label></label><input id='index-a55f80cd-9f00-4933-94ca-1eacd4c95d55' class='xr-index-data-in' type='checkbox'/><label for='index-a55f80cd-9f00-4933-94ca-1eacd4c95d55' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], dtype=&#x27;int64&#x27;, name=&#x27;start_month&#x27;))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>region</div></div><div class='xr-index-preview'>PandasIndex</div><input type='checkbox' disabled/><label></label><input id='index-1c7a46a6-d4d0-4ea4-9944-cdcca480b81a' class='xr-index-data-in' type='checkbox'/><label for='index-1c7a46a6-d4d0-4ea4-9944-cdcca480b81a' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([0, 1, 2, 3], dtype=&#x27;int64&#x27;, name=&#x27;region&#x27;))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>forecastMonth</div></div><div class='xr-index-preview'>PandasIndex</div><input type='checkbox' disabled/><label></label><input id='index-dc855359-4c38-45cf-bb56-4851f961097c' class='xr-index-data-in' type='checkbox'/><label for='index-dc855359-4c38-45cf-bb56-4851f961097c' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([1, 2, 3, 4, 5, 6], dtype=&#x27;int64&#x27;, name=&#x27;forecastMonth&#x27;))</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-a422b790-5367-48c0-99e3-2f88d8a430b5' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-a422b790-5367-48c0-99e3-2f88d8a430b5' class='xr-section-summary'  title='Expand/collapse section'>Attributes: <span>(0)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'></dl></div></li></ul></div></div></div></div>
+        [0.57616062, 0.513548  , 0.67879785, 0.82275277]]])</pre></div></li></ul></div></li></ul></div></div></div></div>
 </div>
 </section>
 <section id="plot-the-correlation-heatmaps">
 <h2>Plot the correlation heatmaps<a class="headerlink" href="#plot-the-correlation-heatmaps" title="Link to this heading">#</a></h2>
 <p>Using the computed correlations, construct correlation heatmaps for each NINO index computed in the previous Notebook.</p>
-<p>Define labels for the valid months or start months, and load the correlations.</p>
+<p>Define labels (valid months or start months, origin and system) and load the correlations.</p>
 <div class="cell tag_hide-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">calendar</span>
 <span class="n">mon_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">calendar</span><span class="o">.</span><span class="n">month_abbr</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span>
+<span class="n">orig_label</span> <span class="o">=</span> <span class="n">system_details</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;origin_details&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;UnknownOrigin&#39;</span><span class="p">)</span>
+<span class="n">sys_name</span> <span class="o">=</span> <span class="n">system_details</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;system_details&#39;</span><span class="p">,{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;UnknownSystem&#39;</span><span class="p">)</span>
 
 <span class="c1"># load the correlations</span>
-<span class="n">file_name</span> <span class="o">=</span> <span class="s1">&#39;/</span><span class="si">{}</span><span class="s1">_mm_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_nino_ind_corr.nc&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;sst&#39;</span><span class="p">,</span> <span class="n">centre</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">hc_str</span><span class="p">)</span>
+<span class="n">file_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/sst_mm_</span><span class="si">{</span><span class="n">origin</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">system</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">hc_str</span><span class="si">}</span><span class="s1">_nino_ind_corr.nc&#39;</span>
 <span class="n">corr</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataarray</span><span class="p">(</span><span class="n">data_path</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1034,9 +1142,10 @@ Data variables:
     <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
 
-    <span class="n">tit_txt1</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> index (temporal correlation with ERA5) &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ind_name</span><span class="p">)</span>
-    <span class="n">tit_txt2</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">, &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">providers</span><span class="p">[</span><span class="n">prov</span><span class="p">][</span><span class="s1">&#39;plot_name&#39;</span><span class="p">],</span> <span class="n">providers</span><span class="p">[</span><span class="n">prov</span><span class="p">][</span><span class="s1">&#39;plot_system&#39;</span><span class="p">])</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">tit_txt2</span> <span class="o">+</span> <span class="n">tit_txt1</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]))</span>
+    <span class="n">tit_txt1</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">ind_name</span><span class="si">}</span><span class="s1"> index (temporal correlation with ERA5) &#39;</span>
+    <span class="n">tit_txt2</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">orig_label</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">sys_name</span><span class="si">}</span><span class="s1"> &#39;</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">tit_txt2</span> <span class="o">+</span> <span class="n">tit_txt1</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;start month&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;leadtime&#39;</span><span class="p">)</span>
     <span class="c1"># Set ticks labels for x-axis</span>
@@ -1046,8 +1155,8 @@ Data variables:
 
     <span class="c1"># HEATMAP (correlation as a function of valid_month and leadtime)</span>
     <span class="n">df_vt</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">future_stack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-    <span class="n">df_vt</span><span class="p">[</span><span class="s1">&#39;valid_month&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_vt</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;start_month&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;forecastMonth&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
-        <span class="s1">&#39;int32&#39;</span><span class="p">)</span>
+    <span class="n">df_vt</span><span class="p">[</span><span class="s1">&#39;valid_month&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_vt</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;start_month&#39;</span><span class="p">]</span>
+                                       <span class="o">+</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;forecastMonth&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int32&#39;</span><span class="p">)</span>
     <span class="n">df_vt</span><span class="p">[</span><span class="s1">&#39;valid_month&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span> <span class="k">if</span> <span class="n">mm</span> <span class="o">&lt;</span> <span class="mi">13</span> <span class="k">else</span> <span class="n">mm</span> <span class="o">-</span> <span class="mi">12</span> <span class="k">for</span> <span class="n">mm</span> <span class="ow">in</span> <span class="n">df_vt</span><span class="p">[</span><span class="s1">&#39;valid_month&#39;</span><span class="p">]]</span>
     <span class="n">df_vt</span> <span class="o">=</span> <span class="n">df_vt</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;start_month&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span>
         <span class="p">[</span><span class="s1">&#39;valid_month&#39;</span><span class="p">,</span> <span class="s1">&#39;forecastMonth&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -1069,23 +1178,23 @@ Data variables:
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0 NINO1+2
 </pre></div>
 </div>
-<img alt="../_images/ccbbc1bb3a72c32ac0be4ab64b4bc8a1bbd1c4ccebc3f8b091f6a404270e4bd8.png" src="../_images/ccbbc1bb3a72c32ac0be4ab64b4bc8a1bbd1c4ccebc3f8b091f6a404270e4bd8.png" />
-<img alt="../_images/2b1202f436070eb5fe8ad1f89af4ef95708f28233bb6ece7c1ab9d87359cf5ec.png" src="../_images/2b1202f436070eb5fe8ad1f89af4ef95708f28233bb6ece7c1ab9d87359cf5ec.png" />
+<img alt="../_images/4a2b6f856623edb1d06aaf8e6bbc3d007b6898a9bb975b70c8979cbb5f072b05.png" src="../_images/4a2b6f856623edb1d06aaf8e6bbc3d007b6898a9bb975b70c8979cbb5f072b05.png" />
+<img alt="../_images/7b5a8c2bf4b5019d7a733d40043cacee2044458ae42ed745ff99042276e71a19.png" src="../_images/7b5a8c2bf4b5019d7a733d40043cacee2044458ae42ed745ff99042276e71a19.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 NINO3
 </pre></div>
 </div>
-<img alt="../_images/3fe73b885086982d091d78acd41e8e12b8c923b804fdca3bf97d6fcc6393e1a2.png" src="../_images/3fe73b885086982d091d78acd41e8e12b8c923b804fdca3bf97d6fcc6393e1a2.png" />
-<img alt="../_images/60c8429678f48ef69aa30952960919c5318500f4d2717d6dbc01c8f8853ae1fa.png" src="../_images/60c8429678f48ef69aa30952960919c5318500f4d2717d6dbc01c8f8853ae1fa.png" />
+<img alt="../_images/9b32db77beb95b5005523b0d72b027b0d46e97477f33a957702d198196501793.png" src="../_images/9b32db77beb95b5005523b0d72b027b0d46e97477f33a957702d198196501793.png" />
+<img alt="../_images/029f0b5a8bd8e9742cfe48c79a22b678eab3bd589c6af8ed1e364a39091ecd9e.png" src="../_images/029f0b5a8bd8e9742cfe48c79a22b678eab3bd589c6af8ed1e364a39091ecd9e.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2 NINO3.4
 </pre></div>
 </div>
-<img alt="../_images/51b75f21fd2b97c11b16e06b1faa451f1a70a1d43b61ea654fb3b9bf903fde55.png" src="../_images/51b75f21fd2b97c11b16e06b1faa451f1a70a1d43b61ea654fb3b9bf903fde55.png" />
-<img alt="../_images/5a77b3667805ad259193606d5d8d9aa09aac6977379e02e6a5a523fd9b2a7674.png" src="../_images/5a77b3667805ad259193606d5d8d9aa09aac6977379e02e6a5a523fd9b2a7674.png" />
+<img alt="../_images/6d66603d6d34dfdf9bf09ff194340b36149b6f50d4091545e08e8ab211a99646.png" src="../_images/6d66603d6d34dfdf9bf09ff194340b36149b6f50d4091545e08e8ab211a99646.png" />
+<img alt="../_images/0c767baed369ebbbfff5433359d595615e27fa579365a05debeae5e0ab5b1780.png" src="../_images/0c767baed369ebbbfff5433359d595615e27fa579365a05debeae5e0ab5b1780.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3 NINO4
 </pre></div>
 </div>
-<img alt="../_images/274665f3ca257b34106801cf7e6599b8bbacb4f70fbe0dbd1718240ac3d34f00.png" src="../_images/274665f3ca257b34106801cf7e6599b8bbacb4f70fbe0dbd1718240ac3d34f00.png" />
-<img alt="../_images/6db748d0d2bf2f10d38f995974df996b0231084786f80a2578fbe575be8f4e9b.png" src="../_images/6db748d0d2bf2f10d38f995974df996b0231084786f80a2578fbe575be8f4e9b.png" />
+<img alt="../_images/38128f121678f0b6b0fed1f508f3d620ad22d6ace5c644d8bcf65f062cf8b613.png" src="../_images/38128f121678f0b6b0fed1f508f3d620ad22d6ace5c644d8bcf65f062cf8b613.png" />
+<img alt="../_images/b50f019fc00ca4c104811d06e15ad0f421e02b3c52409be838dd8269be5084a9.png" src="../_images/b50f019fc00ca4c104811d06e15ad0f421e02b3c52409be838dd8269be5084a9.png" />
 </div>
 </div>
 <p>Extensions to these single-system monthly correlations heatmaps would be to compute indices for multiple systems and then combine them into multi-system combinations. The approach to variance-normalisation in the C3S SST index charts is outlined on the <a class="reference external" href="https://confluence.ecmwf.int/display/CKB/C3S+seasonal+forecast+product+descriptions">products description page</a>, and in the <a class="reference external" href="https://www.ecmwf.int/sites/default/files/elibrary/2021/81237-seas5-user-guide_1.pdf">SEAS5 user guide</a>.</p>
@@ -1104,13 +1213,13 @@ Data variables:
             mode: "python"
         },
         kernelOptions: {
-            name: "python-3.12.9-01",
+            name: "python3",
             path: "./workflows"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python-3.12.9-01'</script>
+    <script>kernelName = 'python3'</script>
 
                 </article>
               
@@ -1136,7 +1245,7 @@ Data variables:
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Extra analysis using C3S seasonal data</p>
+        <p class="prev-next-title">Additional analysis using C3S seasonal data</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
